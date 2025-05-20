@@ -1,88 +1,238 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JoshuaTools!</title>
+    <title>JoshuaTools</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4cc9f0;
+            --background-color: #f8f9fa;
+            --container-bg: #ffffff;
+            --text-color: #333333;
+            --error-color: #ef476f;
+            --success-color: #06d6a0;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background-color: #7eaebb;
+            background: linear-gradient(135deg, #4361ee, #4cc9f0);
+            color: var(--text-color);
+            padding: 20px;
         }
+        
         .container {
             text-align: center;
-            background-color: white;
+            background-color: var(--container-bg);
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            width: 90%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-width: 900px;
+            width: 95%;
+            position: relative;
+            overflow: hidden;
         }
-        h1, h3 {
-            color: #333;
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
         }
+        
+        h1 {
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+            font-weight: 700;
+            font-size: 2.2rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 30px 0 15px;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+        
+        .logo-container {
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-container:hover {
+            transform: scale(1.02);
+        }
+        
         .password-area {
-            margin: 20px 0;
+            margin: 30px 0;
+            padding: 25px;
+            background-color: rgba(67, 97, 238, 0.05);
+            border-radius: 15px;
+            transition: all 0.3s ease;
         }
+        
         input {
-            padding: 10px;
+            padding: 15px;
             width: 70%;
             margin-right: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
+        
+        input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
         button {
-            padding: 10px 15px;
-            background-color: #4CAF50;
+            padding: 15px 25px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
+        
         button:hover {
-            background-color: #7eaebb;
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
         .content-area {
             display: none;
             flex-direction: column;
-            gap: 20px;
+            gap: 30px;
             margin-top: 20px;
+            animation: fadeIn 0.5s ease-in;
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+            animation-delay: 0.2s;
+        }
+        
+        .section:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        
+        .section:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .loaded {
+            animation: scaleIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes scaleIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .shake-error {
+            animation: shakeInput 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            border-color: var(--error-color) !important;
+        }
+        
+        @keyframes shakeInput {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        
         .redirect-btn {
-            padding: 15px;
-            background-color: #007bff;
+            padding: 16px 30px;
+            background-color: var(--primary-color);
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
             display: inline-block;
-            margin-bottom: 20px;
+            margin: 15px 0 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        
         .redirect-btn:hover {
-            background-color: #0056b3;
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
+        
         .error-message {
-            color: red;
-            margin-top: 10px;
+            color: var(--error-color);
+            margin-top: 15px;
+            padding: 10px;
             display: none;
+            font-weight: 500;
+            border-radius: 8px;
+            background-color: rgba(239, 71, 111, 0.1);
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
+        
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        
         .embed-container {
             position: relative;
             width: 100%;
             padding-bottom: 56.25%; /* 16:9 aspect ratio */
             height: 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 15px;
             overflow: hidden;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        
+        .embed-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
         .embed-container iframe {
             position: absolute;
             top: 0;
@@ -91,33 +241,47 @@
             height: 100%;
             border: none;
         }
+        
         footer {
-            margin-top: 30px;
-            color: #555;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9rem;
+            padding: 20px 0 10px;
+            border-top: 1px solid #eee;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="logoo.png" alt="Logo Image" width="400" height="130">       
+        <div class="logo-container">
+            <img src="logoo.png" alt="Logo Image" width="400" height="130">
+        </div>
+        
         <div class="password-area" id="passwordArea">
+            <h3>Enter Password to Continue</h3>
             <input type="password" id="passwordInput" placeholder="what i suck on">
             <button onclick="checkPassword()">BOOM</button>
             <p class="error-message" id="errorMessage">kill yourself. (dont, i love you 🥰)</p>
         </div>
         
         <div class="content-area" id="contentArea">
-            <h3>Blooket hacks</h3>
-            <div class="embed-container">
-                <iframe src="https://blooketbot.glitch.me" title="Blooket hacks" allowfullscreen></iframe>
+            <div class="section">
+                <h3>Blooket Hacks</h3>
+                <div class="embed-container">
+                    <iframe src="https://blooketbot.glitch.me" title="Blooket hacks" allowfullscreen></iframe>
+                </div>
             </div>
             
-            <h1>MORE GAMES</h1>
-            <div class="embed-container">
-                <iframe src="https://teachingtools.art" title="games" allowfullscreen></iframe>
+            <div class="section">
+                <h1>MORE GAMES</h1>
+                <div class="embed-container">
+                    <iframe src="https://teachingtools.art" title="games" allowfullscreen></iframe>
+                </div>
             </div>
             
-            <a href="https://haventdonethis-in.awhile.fairway.cl/" class="redirect-btn">unblock3r</a>
+            <div class="section">
+                <a href="https://haventdonethis-in.awhile.fairway.cl/" class="redirect-btn">UNBLOCK3R</a>
+            </div>
             
             <footer>Made with ❤️ by Josh & Robby</footer>
         </div>
@@ -127,12 +291,32 @@
         function checkPassword() {
             const password = document.getElementById('passwordInput').value;
             const errorMessage = document.getElementById('errorMessage');
+            const passwordArea = document.getElementById('passwordArea');
+            const contentArea = document.getElementById('contentArea');
             
             if (password === "ballsack") {
-                document.getElementById('passwordArea').style.display = 'none';
-                document.getElementById('contentArea').style.display = 'flex';
+                // Success animation
+                passwordArea.style.opacity = '0';
+                setTimeout(() => {
+                    passwordArea.style.display = 'none';
+                    contentArea.style.display = 'flex';
+                    // Add success animation
+                    setTimeout(() => {
+                        contentArea.style.opacity = '1';
+                    }, 100);
+                }, 300);
             } else {
+                // Error animation
                 errorMessage.style.display = 'block';
+                
+                // Shake the input
+                const input = document.getElementById('passwordInput');
+                input.classList.add('shake-error');
+                setTimeout(() => {
+                    input.classList.remove('shake-error');
+                }, 500);
+                
+                // Hide error message after delay
                 setTimeout(() => {
                     errorMessage.style.display = 'none';
                 }, 3000);
@@ -144,6 +328,11 @@
             if (event.key === 'Enter') {
                 checkPassword();
             }
+        });
+        
+        // Add some visual feedback on page load
+        window.addEventListener('load', function() {
+            document.querySelector('.container').classList.add('loaded');
         });
     </script>
 </body>
