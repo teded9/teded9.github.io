@@ -1,339 +1,252 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JoshuaTools</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Beyond The Cannibal - The Future of Sustenance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-        
-        :root {
-            --primary-color: #4361ee;
-            --secondary-color: #3f37c9;
-            --accent-color: #4cc9f0;
-            --background-color: #f8f9fa;
-            --container-bg: #ffffff;
-            --text-color: #333333;
-            --error-color: #ef476f;
-            --success-color: #06d6a0;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
         body {
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #4361ee, #4cc9f0);
-            color: var(--text-color);
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Black background */
+            color: #FFFFFF; /* White text */
         }
-        
-        .container {
-            text-align: center;
-            background-color: var(--container-bg);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            max-width: 900px;
-            width: 95%;
-            position: relative;
-            overflow: hidden;
+        .hero-bg {
+            background-image: url('https://placehold.co/1920x1080/000000/222222?text=Abstract+Culinary+Background'); /* Black bg, dark grey text */
+            background-size: cover;
+            background-position: center;
         }
-        
-        .container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        .accent-color {
+            color: #22c55e; /* Green accent */
         }
-        
-        h1 {
-            color: var(--primary-color);
-            margin: 25px 0 15px;
-            font-weight: 700;
-            font-size: 2.2rem;
+        .bg-accent {
+            background-color: #22c55e; /* Green background */
         }
-        
-        h3 {
-            color: var(--secondary-color);
-            margin: 30px 0 15px;
-            font-weight: 600;
-            font-size: 1.5rem;
+        .border-accent {
+            border-color: #22c55e; /* Green border */
         }
-        
-        .logo-container {
-            margin-bottom: 20px;
-            transition: transform 10s ease;
+        .accent-color-secondary {
+            color: #ef4444; /* Red accent */
         }
-        
-        .logo-container:hover {
-            transform: scale(1.02);
+        .bg-accent-secondary {
+            background-color: #ef4444; /* Red background */
         }
-        
-        .password-area {
-            margin: 30px 0;
-            padding: 25px;
-            background-color: rgba(67, 97, 238, 0.05);
-            border-radius: 15px;
-            transition: all 0.3s ease;
+        .border-accent-secondary {
+            border-color: #ef4444; /* Red border */
         }
-        
-        input {
-            padding: 15px;
-            width: 70%;
-            margin-right: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-family: 'Poppins', sans-serif;
+        .nav-link { /* Tailwind classes will be used directly in HTML for these, but this is a fallback if needed */
+            @apply px-3 py-2 rounded-md text-sm font-medium text-neutral-200 hover:text-white hover:bg-neutral-800 transition-colors;
         }
-        
-        input:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        .section-title {
+            @apply text-3xl sm:text-4xl font-bold mb-8 text-center;
         }
-        
-        button {
-            padding: 15px 25px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-family: 'Poppins', sans-serif;
+        .card {
+            background-color: #18181b; /* Tailwind zinc-900 - Dark gray for cards */
+            @apply p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300;
         }
-        
-        button:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .btn {
+            @apply px-6 py-3 rounded-md font-semibold transition-colors duration-300;
         }
-        
-        button:active {
-            transform: translateY(0);
+        .btn-primary {
+            background-color: #22c55e; /* Green */
+            color: #FFFFFF; /* White text */
         }
-        
-        .content-area {
-            display: none;
-            flex-direction: column;
-            gap: 30px;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease-in;
+        .btn-primary:hover {
+            background-color: #16a34a; /* Darker Green */
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .btn-secondary {
+            border: 2px solid #ef4444; /* Red border */
+            color: #ef4444; /* Red text */
         }
-        
-        .section {
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
-            animation-delay: 0.2s;
+        .btn-secondary:hover {
+            background-color: #ef4444; /* Red background */
+            color: #FFFFFF; /* White text */
         }
-        
-        .section:nth-child(2) {
-            animation-delay: 0.4s;
+        .bg-section-darker { /* Custom class for sections like Philosophy, Innovation */
+            background-color: #0a0a0a; /* Very dark gray, almost black */
         }
-        
-        .section:nth-child(3) {
-            animation-delay: 20.9s;
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        
-        .loaded {
-            animation: scaleIn 10s ease-out forwards;
+        ::-webkit-scrollbar-track {
+            background: #0f0f0f; /* Darker track for black theme */
         }
-        
-        @keyframes scaleIn {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        ::-webkit-scrollbar-thumb {
+            background: #22c55e; /* Green thumb */
+            border-radius: 4px;
         }
-        
-        .shake-error {
-            animation: shakeInput 10s cubic-bezier(.36,.07,.19,.97) both;
-            border-color: var(--error-color) !important;
-        }
-        
-        @keyframes shakeInput {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-        
-        .redirect-btn {
-            padding: 16px 30px;
-            background-color: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            display: inline-block;
-            margin: 15px 0 25px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .redirect-btn:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        .error-message {
-            color: var(--error-color);
-            margin-top: 15px;
-            padding: 10px;
-            display: none;
-            font-weight: 500;
-            border-radius: 8px;
-            background-color: rgba(239, 71, 111, 0.1);
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-        }
-        
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
-        
-        .embed-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .embed-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        .embed-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        footer {
-            margin-top: 40px;
-            color: #666;
-            font-size: 0.9rem;
-            padding: 20px 0 10px;
-            border-top: 1px solid #eee;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #16a34a; /* Darker green on hover */
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="logo-container">
-            <img src="logoo.png" alt="Logo Image" width="400" height="130">
-        </div>
-        
-        <div class="password-area" id="passwordArea">
-            <h3>Enter Password to Continue</h3>
-            <input type="password" id="passwordInput" placeholder="what i suck on">
-            <button onclick="checkPassword()">BOOM</button>
-            <p class="error-message" id="errorMessage">kill yourself. (dont, i love you 🥰) AKJHASKDJLHAHFDLKJAHSDLKHASDKLJHALKJH AHHHHHHHHHHHHHHHHHHHHHHH</p>
-        </div>
-        
-        <div class="content-area" id="contentArea">
-            <div class="section">
-                <h3>Blooket Hacks</h3>
-                <div class="embed-container">
-                    <iframe src="https://blooketbot.glitch.me" title="Blooket hacks" allowfullscreen></iframe>
+<body class="antialiased">
+
+    <header class="bg-black shadow-md sticky top-0 z-50"> <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold accent-color">Beyond The Cannibal</a>
+                </div>
+                <nav class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="nav-link text-neutral-200 hover:bg-neutral-800">Home</a>
+                        <a href="#philosophy" class="nav-link text-neutral-200 hover:bg-neutral-800">Philosophy</a>
+                        <a href="#products" class="nav-link text-neutral-200 hover:bg-neutral-800">Products</a>
+                        <a href="#innovation" class="nav-link text-neutral-200 hover:bg-neutral-800">Innovation</a>
+                        <a href="#contact" class="nav-link text-neutral-200 hover:bg-neutral-800">Contact</a>
+                    </div>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-neutral-200 hover:text-white focus:outline-none focus:text-white">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
-            
-            <div class="section">
-                <h1>MORE GAMES</h1>
-                <div class="embed-container">
-                    <iframe src="https://teachingtools.art" title="games" allowfullscreen></iframe>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden bg-zinc-900"> <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Home</a>
+            <a href="#philosophy" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Philosophy</a>
+            <a href="#products" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Products</a>
+            <a href="#innovation" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Innovation</a>
+            <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Contact</a>
+        </div>
+    </header>
+
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-center relative">
+        <div class="absolute inset-0 bg-black opacity-70"></div> <div class="relative z-10 p-4">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                The <span class="accent-color">Future of Sustenance</span>. Redefined.
+            </h1>
+            <p class="text-lg sm:text-xl text-neutral-200 mb-8 max-w-2xl mx-auto"> Beyond The Cannibal pioneers a revolutionary approach to culinary artistry, crafting exquisite synthetic meats that challenge convention and redefine the boundaries of taste.
+            </p>
+            <div>
+                <a href="#products" class="btn btn-primary mr-4 mb-4 sm:mb-0">Explore Our Selections</a>
+                <a href="#philosophy" class="btn btn-secondary">Our Vision</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="philosophy" class="py-16 sm:py-24 bg-section-darker"> <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title">Our <span class="accent-color">Philosophy</span></h2>
+            <div class="max-w-3xl mx-auto text-center text-lg text-neutral-300 space-y-6"> <p>
+                    At Beyond The Cannibal, we believe in pushing the frontiers of food science. Our mission is to provide unique culinary experiences that are ethically conceived and meticulously perfected. We embrace innovation to offer sophisticated alternatives for the discerning palate.
+                </p>
+                <p>
+                    Our process is rooted in <strong class="text-neutral-100">bio-engineering excellence</strong> and a commitment to <strong class="text-neutral-100">unparalleled quality</strong>. We are not just creating food; we are crafting the future of nourishment, one that is bold, conscious, and unequivocally novel.
+                </p>
+                 <p class="italic">"Ethically Sourced. Scientifically Perfected. <span class="accent-color">Uniquely Human.</span>"</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-16 sm:py-24">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title">Curated <span class="accent-color">Selections</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card">
+                    <img src="https://placehold.co/600x400/111111/22c55e?text=Prime+Cut+Alpha" alt="Prime Cut Alpha" class="w-full h-48 object-cover rounded-t-lg mb-4" onerror="this.src='https://placehold.co/600x400/111111/FFFFFF?text=Image+Error'; this.alt='Error loading image'">
+                    <h3 class="text-2xl font-semibold mb-2 accent-color">Prime Cut Alpha</h3>
+                    <p class="text-neutral-300 mb-4">A flagship offering, known for its robust texture and complex flavor profile. Cultivated for the adventurous connoisseur.</p> <a href="#" class="text-accent font-semibold hover:underline">Learn More &raquo;</a>
+                </div>
+                <div class="card">
+                    <img src="https://placehold.co/600x400/111111/22c55e?text=Artisan+Blend+Beta" alt="Artisan Blend Beta" class="w-full h-48 object-cover rounded-t-lg mb-4" onerror="this.src='https://placehold.co/600x400/111111/FFFFFF?text=Image+Error'; this.alt='Error loading image'">
+                    <h3 class="text-2xl font-semibold mb-2 accent-color">Artisan Blend Beta</h3>
+                    <p class="text-neutral-300 mb-4">A delicate and versatile blend, perfect for a variety of culinary applications. Subtly nuanced, exceptionally refined.</p> <a href="#" class="text-accent font-semibold hover:underline">Learn More &raquo;</a>
+                </div>
+                <div class="card">
+                    <img src="https://placehold.co/600x400/111111/22c55e?text=Signature+Gamma" alt="Signature Gamma" class="w-full h-48 object-cover rounded-t-lg mb-4" onerror="this.src='https://placehold.co/600x400/111111/FFFFFF?text=Image+Error'; this.alt='Error loading image'">
+                    <h3 class="text-2xl font-semibold mb-2 accent-color">Signature Gamma</h3>
+                    <p class="text-neutral-300 mb-4">Our most exclusive creation. Limited availability. An unparalleled sensory journey for the truly discerning.</p> <a href="#" class="text-accent font-semibold hover:underline">Learn More &raquo;</a>
                 </div>
             </div>
-            
-            <div class="section">
-                <a href="https://haventdonethis-in.awhile.fairway.cl/" class="redirect-btn">UNBLOCK3R</a>
-            </div>
-            
-            <footer>Made with ❤️ by Josh & Robby</footer>
         </div>
-    </div>
+    </section>
+
+    <section id="innovation" class="py-16 sm:py-24 bg-section-darker"> <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title">The <span class="accent-color">Science</span> of Sensation</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/2">
+                    <img src="https://placehold.co/800x600/0A0A0A/22c55e?text=Bio-Lab+Concept" alt="Innovation Lab" class="rounded-lg shadow-xl w-full" onerror="this.src='https://placehold.co/800x600/0A0A0A/FFFFFF?text=Image+Error'; this.alt='Error loading image'">
+                </div>
+                <div class="md:w-1/2 text-lg text-neutral-300 space-y-4"> <p>Our state-of-the-art facilities and pioneering research team are at the heart of Beyond The Cannibal. We leverage cutting-edge cellular agriculture and tissue engineering techniques to replicate complex biological structures with astonishing fidelity.</p>
+                    <p>Every product is the result of rigorous scientific endeavor, ensuring not only ethical production but also a taste and texture profile that meets the highest standards of gastronomic excellence. We are constantly exploring new methodologies to enhance sustainability and expand the horizons of synthetic biology.</p>
+                    <a href="#" class="btn btn-primary mt-6">Discover Our Research</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 sm:py-24">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title">Connect With <span class="accent-color">Us</span></h2>
+            <div class="max-w-xl mx-auto card">
+                <p class="text-center text-neutral-300 mb-8">For inquiries, partnerships, or to learn more about the future of food, please reach out. We operate with discretion and value your interest.</p> <form action="#" method="POST">
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium text-neutral-200 mb-1">Full Name</label> <input type="text" name="name" id="name" class="w-full px-3 py-2 rounded-md bg-neutral-700 text-neutral-100 border border-neutral-600 focus:ring-green-500 focus:border-green-500" placeholder="Your Name"> </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-sm font-medium text-neutral-200 mb-1">Email Address</label> <input type="email" name="email" id="email" class="w-full px-3 py-2 rounded-md bg-neutral-700 text-neutral-100 border border-neutral-600 focus:ring-green-500 focus:border-green-500" placeholder="you@example.com"> </div>
+                    <div class="mb-6">
+                        <label for="message" class="block text-sm font-medium text-neutral-200 mb-1">Message</label> <textarea name="message" id="message" rows="4" class="w-full px-3 py-2 rounded-md bg-neutral-700 text-neutral-100 border border-neutral-600 focus:ring-green-500 focus:border-green-500" placeholder="Your inquiry..."></textarea> </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary w-full sm:w-auto">Send Message</button>
+                    </div>
+                </form>
+                <p class="text-xs text-neutral-400 mt-6 text-center">Please note: Beyond The Cannibal is a conceptual entity. This form is for demonstration purposes only.</p> </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-neutral-300 py-12"> <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="mb-2">&copy; <span id="currentYear"></span> Beyond The Cannibal. All Rights Reserved (Conceptually).</p>
+            <p class="text-sm">Pioneering the Next Wave of Culinary Evolution.</p>
+            <div class="mt-4">
+                <a href="#" class="inline-block mx-2 hover:text-accent transition-colors"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="#" class="inline-block mx-2 hover:text-accent transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                </a>
+                <a href="#" class="inline-block mx-2 hover:text-accent transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.927 8.177c.05.261.073.53.073.807 0 2.441-1.864 5.254-5.258 5.254-1.042 0-2.01-.305-2.825-.828.145.017.292.026.44.026.865 0 1.657-.294 2.285-.786a1.844 1.844 0 01-1.72-1.277c.298.057.605.087.922.087.355 0 .696-.047.993-.13a1.84 1.84 0 01-1.477-1.803v-.023c.44.244.947.39 1.483.407A1.838 1.838 0 018.96 8.055a5.235 5.235 0 003.806 1.93 1.84 1.84 0 011.79-2.469c.797 0 1.517.337 2.023.879.63-.124 1.224-.355 1.756-.67a1.842 1.842 0 01-1.217 1.608z" clip-rule="evenodd" /></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        function checkPassword() {
-            const password = document.getElementById('passwordInput').value;
-            const errorMessage = document.getElementById('errorMessage');
-            const passwordArea = document.getElementById('passwordArea');
-            const contentArea = document.getElementById('contentArea');
-            
-            if (password === "fuck") {
-                // Success animation
-                passwordArea.style.opacity = '0';
-                setTimeout(() => {
-                    passwordArea.style.display = 'none';
-                    contentArea.style.display = 'flex';
-                    // Add success animation
-                    setTimeout(() => {
-                        contentArea.style.opacity = '1';
-                    }, 100);
-                }, 300);
-            } else {
-                // Error animation
-                errorMessage.style.display = 'block';
-                
-                // Shake the input
-                const input = document.getElementById('passwordInput');
-                input.classList.add('shake-error');
-                setTimeout(() => {
-                    input.classList.remove('shake-error');
-                }, 500);
-                
-                // Hide error message after delay
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 3000);
-            }
-        }
+        // JavaScript for mobile menu toggle
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
 
-        // Allow pressing Enter key to submit
-        document.getElementById('passwordInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                checkPassword();
-            }
+        // Close mobile menu when a link is clicked
+        const mobileNavLinks = mobileMenu.querySelectorAll('a');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
         });
         
-        // Add some visual feedback on page load
-        window.addEventListener('load', function() {
-            document.querySelector('.container').classList.add('loaded');
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     </script>
+
 </body>
 </html>
