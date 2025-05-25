@@ -1,56 +1,72 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found | Beyond The Cannibal</title>
+    <title>404 - Page Not Found | Beyond Cannibal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Base styles for the body, centering content and setting background/text colors */
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif; /* Apply Inter font */
             background-color: #000000; /* Black background */
             color: #FFFFFF; /* White text */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 1rem;
+            display: flex; /* Use flexbox for centering */
+            flex-direction: column; /* Stack items vertically */
+            align-items: center; /* Center horizontally */
+            justify-content: center; /* Center vertically */
+            min-height: 100vh; /* Full viewport height */
+            text-align: center; /* Center text within elements */
+            padding: 1rem; /* Add some padding around the content */
         }
+        /* Accent color for specific elements */
         .accent-color {
             color: #22c55e; /* Green accent */
         }
+        /* Base styles for buttons using Tailwind's @apply directive */
         .btn {
             @apply inline-block px-8 py-4 rounded-md font-semibold transition-colors duration-300 text-lg;
         }
+        /* Primary button specific styles */
         .btn-primary {
-            background-color: #22c55e; /* Green */
+            background-color: #22c55e; /* Green background */
             color: #FFFFFF; /* White text */
         }
+        /* Hover effect for the primary button */
         .btn-primary:hover {
-            background-color: #16a34a; /* Darker Green */
+            background-color: #16a34a; /* Darker Green on hover */
         }
+        /* Styles for the 404 error code */
         .error-code {
             font-size: clamp(6rem, 20vw, 12rem); /* Responsive font size */
             font-weight: bold;
-            line-height: 1;
+            line-height: 1; /* Adjust line height */
             color: #22c55e; /* Green accent for the 404 code */
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.5rem; /* Space below the code */
         }
+        /* Styles for the main error message */
         .error-message {
             font-size: clamp(1.5rem, 5vw, 2.5rem); /* Responsive font size */
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 1rem; /* Space below the message */
         }
+        /* Styles for the error description paragraph */
         .error-description {
             font-size: clamp(1rem, 2.5vw, 1.25rem); /* Responsive font size */
             color: #a1a1aa; /* Tailwind neutral-400 */
-            max-width: 600px;
-            margin-bottom: 2rem;
+            max-width: 600px; /* Limit width for readability */
+            margin-bottom: 2rem; /* Space below the description */
+
+            /* Typing effect specific CSS */
+            overflow: hidden; /* Hides text that hasn't been "typed" yet */
+            white-space: nowrap; /* Prevents text from wrapping to create the typing line effect */
+            border-right: .15em solid #a1a1aa; /* Creates the blinking cursor effect */
+            /* Apply the blinking animation to the cursor */
+            animation:
+                blink-caret .75s step-end infinite;
         }
-        /* Custom scrollbar for consistency if page ever needs to scroll */
+        /* Custom scrollbar styles for better aesthetics */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -64,6 +80,12 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #16a34a;
         }
+
+        /* Keyframes for the blinking cursor animation */
+        @keyframes blink-caret {
+            from, to { border-color: transparent } /* Cursor is transparent at start/end */
+            50% { border-color: #a1a1aa; } /* Cursor is visible at 50% of the animation cycle */
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -72,10 +94,7 @@
 
     <h1 class="error-message">Page Not Found</h1>
 
-    <p class="error-description">
-       It seems like Joshua forgot how to program a website again
-
-    </p>
+    <p class="error-description"></p>
 
     <a href="index.html" class="btn btn-primary">
         Return to the Main Course (Homepage)
@@ -86,8 +105,112 @@
     </footer>
 
     <script>
-        // Set current year in footer
+        // JavaScript to set the current year in the footer dynamically
         document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // JavaScript for the multi-phase typing effect on the error description
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select the paragraph element where the typing effect will occur
+            const textElement = document.querySelector('.error-description');
+
+            // Define the different phrases to be typed in sequence
+            const phrases = [
+                "It seems like Joshua forgot how to program a website again.",
+                "he never knew how to anyways",
+                "idiot.",
+                "Not as dumb as you though",
+                "Sorry, that was kind of mean",
+                "I gotta stop insulting people",
+                "Really don't know what to say here",
+                "uh",
+                "I gotta get to actually make my website because",
+                "I'm just making a useless 404 page",
+                "yeah i guess",
+                "here is some fun facts",
+                 "No number before 1,000 contains the letter A.",
+                  "i did not know that wow!",
+                "ok bye"
+            ];
+            let phraseIndex = 0; // Current phrase being typed
+            let charIndex = 0; // Current character index within the phrase
+            const typingSpeed = 40; // Speed of typing in milliseconds per character (faster)
+            const deletingSpeed = 30; // Speed of deleting in milliseconds per character
+            const pauseAfterType = 1000; // Pause after typing a phrase (milliseconds)
+            const pauseAfterDelete = 500; // Pause after deleting a phrase (milliseconds)
+
+            /**
+             * Resets the cursor animation to make it blink during typing phases.
+             */
+            function startCursorBlink() {
+                textElement.style.borderRight = '.15em solid #a1a1aa';
+                textElement.style.animation = 'blink-caret .75s step-end infinite';
+            }
+
+            /**
+             * Stops the cursor animation (makes it disappear) during deletion phases.
+             */
+            function stopCursorBlink() {
+                textElement.style.borderRight = 'none';
+                textElement.style.animation = 'none';
+            }
+
+            /**
+             * Implements the typewriter effect by appending characters one by one.
+             * @param {string} text - The full text to type.
+             * @param {function} callback - Function to call after typing is complete.
+             */
+            function typeWriter(text, callback) {
+                startCursorBlink(); // Ensure cursor is blinking
+                if (charIndex < text.length) {
+                    textElement.textContent += text.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(() => typeWriter(text, callback), typingSpeed);
+                } else {
+                    // After typing, pause then call the callback
+                    setTimeout(callback, pauseAfterType);
+                }
+            }
+
+            /**
+             * Implements the deletion effect by removing characters one by one.
+             * @param {function} callback - Function to call after deletion is complete.
+             */
+            function deleteWriter(callback) {
+                stopCursorBlink(); // Hide cursor during deletion
+                if (textElement.textContent.length > 0) {
+                    textElement.textContent = textElement.textContent.slice(0, -1); // Remove last character
+                    setTimeout(() => deleteWriter(callback), deletingSpeed);
+                } else {
+                    // After deleting, pause then call the callback
+                    setTimeout(callback, pauseAfterDelete);
+                }
+            }
+
+            /**
+             * Manages the sequence of typing and deleting phrases.
+             */
+            function sequence() {
+                if (phraseIndex < phrases.length) {
+                    // Type the current phrase
+                    charIndex = 0; // Reset char index for new phrase
+                    typeWriter(phrases[phraseIndex], () => {
+                        // After typing, if it's not the last phrase, delete it
+                        if (phraseIndex < phrases.length - 1) {
+                            deleteWriter(() => {
+                                phraseIndex++; // Move to the next phrase
+                                sequence(); // Continue the sequence
+                            });
+                        } else {
+                            // If it's the very last phrase, stop the cursor after typing
+                            stopCursorBlink();
+                        }
+                    });
+                }
+            }
+
+            // Start the entire typing/deleting sequence when the DOM is fully loaded
+            sequence();
+        });
     </script>
 
 </body>
