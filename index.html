@@ -32,9 +32,9 @@
         }
         
         .container {
-            max-width: 1400px;
+            max-width: min(1400px, 90vw);
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 clamp(16px, 3vw, 40px);
         }
         
         /* Header */
@@ -57,7 +57,7 @@
         }
         
         .logo {
-            height: 48px;
+            height: clamp(40px, 6vw, 60px);
             width: auto;
             filter: brightness(0) invert(1);
         }
@@ -65,15 +65,17 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 40px;
+            gap: clamp(20px, 4vw, 40px);
         }
         
         .nav-links a {
             text-decoration: none;
             color: var(--white);
             font-weight: 500;
-            font-size: 16px;
+            font-size: clamp(14px, 2vw, 16px);
             transition: all 0.3s ease;
+            position: relative;
+        } 0.3s ease;
             position: relative;
         }
         
@@ -126,8 +128,9 @@
         }
         
         .hero-logo {
-            height: clamp(120px, 20vw, 300px);
+            height: clamp(100px, 25vw, 400px);
             width: auto;
+            max-width: 90vw;
             margin-bottom: 24px;
             filter: brightness(0) invert(1);
             animation: slideInUp 1s ease-out;
@@ -226,7 +229,7 @@
         
         .product-image {
             width: 100%;
-            height: 240px;
+            height: clamp(180px, 20vw, 280px);
             border-radius: 16px;
             margin-bottom: 32px;
             object-fit: cover;
@@ -273,7 +276,8 @@
         }
         
         .about-image {
-            height: 500px;
+            height: clamp(300px, 40vw, 500px);
+            width: 100%;
             border-radius: 24px;
             object-fit: cover;
             border: 1px solid rgba(16, 185, 129, 0.2);
@@ -288,7 +292,7 @@
         }
         
         .footer-logo {
-            height: 64px;
+            height: clamp(48px, 8vw, 80px);
             width: auto;
             margin: 0 auto 32px;
             filter: brightness(0) invert(1);
