@@ -374,7 +374,7 @@ footer {
     text-align: left;
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
+    /* Removed overflow: hidden; to allow text to expand vertically */
 }
 
 .review-card::before {
