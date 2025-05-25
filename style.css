@@ -360,7 +360,6 @@ footer {
     display: flex;
     position: relative; /* Needed for JavaScript transform */
     left: 0; /* Starting position for JavaScript transform */
-    white-space: nowrap; /* Keep all review cards in a single line */
 }
 
 .review-card {
@@ -374,7 +373,13 @@ footer {
     text-align: left;
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
+    /* Previous: Removed overflow: hidden; to allow text to expand vertically */
+
+    /* Added to ensure content fully displays and card expands as needed */
+    display: flex; /* Make review card a flex container */
+    flex-direction: column; /* Stack its content vertically */
+    min-height: 180px; /* Provide a reasonable minimum height, allowing growth */
+    justify-content: space-between; /* Distribute space if elements inside are fixed */
 }
 
 .review-card::before {
@@ -434,6 +439,8 @@ footer {
     font-size: 0.95rem;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
+    white-space: normal; /* Allow text to wrap normally */
+    flex-grow: 1; /* Allow text to take up available vertical space */
 }
 
 /* Animations */
