@@ -4,379 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beyond cannibal</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --primary-green: #10b981;
-            --dark-green: #059669;
-            --light-green: #34d399;
-            --neon-green: #00ff88;
-            --black: #000000;
-            --dark-gray: #111827;
-            --medium-gray: #374151;
-            --light-gray: #f9fafb;
-            --white: #ffffff;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--white);
-            background: var(--black);
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: min(1400px, 90vw);
-            margin: 0 auto;
-            padding: 0 clamp(16px, 3vw, 40px);
-        }
-        
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
-            transition: all 0.3s ease;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-        }
-        
-        .logo { /* Filter was removed here */
-            height: clamp(40px, 6vw, 60px);
-            width: auto;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: clamp(20px, 4vw, 40px);
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--white);
-            font-weight: 500;
-            font-size: clamp(14px, 2vw, 16px);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--neon-green);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover {
-            color: var(--neon-green);
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 30% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-                          radial-gradient(circle at 70% 30%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-        
-        .hero-content {
-            text-align: center;
-            z-index: 2;
-            max-width: 800px;
-        }
-        
-        .hero-logo { /* Filter was removed here */
-            height: clamp(100px, 25vw, 400px);
-            width: auto;
-            max-width: 90vw;
-            margin-bottom: 24px;
-            animation: slideInUp 1s ease-out;
-        }
-        
-        .hero p {
-            font-size: 20px;
-            margin-bottom: 40px;
-            color: rgba(255, 255, 255, 0.8);
-            animation: slideInUp 1s ease-out 0.2s both;
-            line-height: 1.7;
-        }
-        
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, var(--primary-green), var(--neon-green));
-            color: var(--black);
-            padding: 16px 32px;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
-            animation: slideInUp 1s ease-out 0.4s both;
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 48px rgba(16, 185, 129, 0.4);
-            scale: 1.05;
-        }
-        
-        /* Section Styling */
-        .section {
-            padding: 120px 0;
-            position: relative;
-        }
-        
-        .section:nth-child(even) {
-            background: var(--dark-gray);
-        }
-        
-        .section h2 {
-            text-align: center;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            margin-bottom: 80px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--white) 0%, var(--light-green) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 40px;
-            margin-top: 80px;
-        }
-        
-        .product-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            border-radius: 24px;
-            padding: 40px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--neon-green);
-            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2);
-        }
-        
-        .product-card:hover::before {
-            opacity: 1;
-        }
-        
-        .product-image {
-            width: 100%;
-            height: clamp(180px, 20vw, 280px);
-            border-radius: 16px;
-            margin-bottom: 32px;
-            object-fit: cover;
-            transition: all 0.4s ease;
-        }
-        
-        .product-card:hover .product-image {
-            scale: 1.05;
-        }
-        
-        .product-card h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-            color: var(--white);
-            font-weight: 600;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .product-card p {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.7;
-            font-size: 16px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-        
-        .about-text {
-            font-size: 18px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .about-text p {
-            margin-bottom: 24px;
-        }
-        
-        .about-image {
-            height: clamp(300px, 40vw, 500px);
-            width: 100%;
-            border-radius: 24px;
-            object-fit: cover;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--black);
-            border-top: 1px solid rgba(16, 185, 129, 0.2);
-            padding: 80px 0 40px;
-            text-align: center;
-        }
-        
-        .footer-logo { /* Filter was removed here */
-            height: clamp(48px, 8vw, 80px);
-            width: auto;
-            margin: 0 auto 32px;
-        }
-        
-        .footer-content h3 {
-            font-size: 24px;
-            margin-bottom: 16px;
-            color: var(--white);
-        }
-        
-        .footer-content p {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 8px;
-        }
-        
-        /* Animations */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            
-            .product-card {
-                padding: 24px;
-            }
-            
-            .section {
-                padding: 80px 0;
-            }
-            
-            .container {
-                padding: 0 16px;
-            }
-        }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: var(--black);
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-green);
-            border-radius: 4px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--neon-green);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
         <nav class="container">
-            <img src="logo.png" alt="Future Ground Logo" class="logo">
+            <img src="logo.png" alt="Site Logo" class="logo">
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#products">Products</a></li>
                 <li><a href="#about">About</a></li>
+                <li><a href="#reviews">Reviews</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -384,8 +23,8 @@
 
     <section id="home" class="hero">
         <div class="hero-content">
-            <img src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.png" alt="Future Ground Logo" class="hero-logo">
-            <p>Unethically Sourced. Scientifically Perfected. Uniquely Human.</p>
+            <img src="small_logo.png" alt="Beyond Cannibal Logo" class="hero-logo">
+            <p>Unethically Sourced. Scientifically Perfected. <span class="text-green">Uniquely Human.</span></p>
             <a href="#products" class="cta-button">
                 Discover Products
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -400,17 +39,17 @@
             <h2>Our Products</h2>
             <div class="products-grid">
                 <div class="product-card">
-                    <img src="logo.png" alt="Lab-Grown Beef" class="product-image">
+                    <img src="https://placehold.co/280x180/00ff88/000000?text=PRODUCT+BEEF" alt="Lab-Grown Beef" class="product-image">
                     <h3>Premium Ground Beef</h3>
                     <p>Indistinguishable from traditional beef, our lab-grown ground beef delivers the same taste, texture, and nutritional value without environmental impact. Perfect for burgers, tacos, and more.</p>
                 </div>
                 <div class="product-card">
-                    <img src="logo.png" alt="Lab-Grown Chicken" class="product-image">
+                    <img src="https://placehold.co/280x180/00ff88/000000?text=PRODUCT+CHICKEN" alt="Lab-Grown Chicken" class="product-image">
                     <h3>Cultured Chicken</h3>
                     <p>Tender, juicy chicken meat grown from real chicken cells. Zero antibiotics, zero hormones, zero compromise on taste. Ideal for any recipe calling for ground chicken.</p>
                 </div>
                 <div class="product-card">
-                    <img src="logo.png" alt="Lab-Grown Pork" class="product-image">
+                    <img src="https://placehold.co/280x180/00ff88/000000?text=PRODUCT+PORK" alt="Lab-Grown Pork" class="product-image">
                     <h3>Sustainable Pork</h3>
                     <p>Rich, flavorful pork that satisfies your cravings while reducing environmental footprint by 96% compared to conventional farming. The future of bacon starts here.</p>
                 </div>
@@ -429,7 +68,128 @@
                     
                     <p>Join us in building a more sustainable future where exceptional taste meets environmental responsibility. The future of food is here.</p>
                 </div>
-                <img src="logo.png" alt="Future Ground Facility" class="about-image">
+                <img src="https://placehold.co/500x300/00ff88/000000?text=ABOUT+IMAGE" alt="Future Ground Facility" class="about-image">
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="section">
+        <div class="container">
+            <h2>Customer Reviews</h2>
+            <div class="reviews-carousel-container">
+                <div class="reviews-carousel-inner" id="reviewsCarouselInner">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Jeffrey Dahmer</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            </div>
+                        </div>
+                        <p class="review-text">"I wish I knew about Beyond Cannibal before I died. The ethical sourcing and scientific perfection would have made my life so much easier. Five stars!"</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Armin Meiwes</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.5828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            </div>
+                        </div>
+                        <p class="review-text">"Absolutely love this product! The taste is incredibly authentic, and knowing it's sustainably sourced makes it even better. Five stars!"</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Issei Sagawa</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            </div>
+                        </div>
+                        <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Albert Fish</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            </div>
+                        </div>
+                        <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing. One star."</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Jeffrey Dahmer</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            </div>
+                        </div>
+                        <p class="review-text">"I wish I knew about Beyond Cannibal before I died. The ethical sourcing and scientific perfection would have made my life so much easier. Five stars!"</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Armin Meiwes</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            </div>
+                        </div>
+                        <p class="review-text">"Absolutely love this product! The taste is incredibly authentic, and knowing it's sustainably sourced makes it even better. Five stars!"</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Issei Sagawa</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            </div>
+                        </div>
+                        <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
+                    </div>
+
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Albert Fish</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            </div>
+                        </div>
+                        <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing. One star."</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -441,61 +201,18 @@
                 <h3>Future Ground</h3>
                 <p>Contact: hello@futureground.com</p>
                 <p>Phone: 1-800-FUTURE-1</p>
+                
+                <div class="payment-logos">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa Logo" class="payment-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/2000px-Mastercard-logo.svg.png" alt="Mastercard Logo" class="payment-logo">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Paypal_2014_logo.svg/2560px-Paypal_2014_logo.svg.png" alt="PayPal Logo" class="payment-logo">
+                </div>
+
                 <p style="margin-top: 32px; opacity: 0.6;">&copy; 2025 Future Ground. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Header scroll effect
-        let lastScrollY = 0;
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            const currentScrollY = window.scrollY;
-            
-            if (currentScrollY > 100) {
-                header.style.background = 'rgba(0, 0, 0, 0.95)';
-                header.style.backdropFilter = 'blur(30px)';
-            } else {
-                header.style.background = 'rgba(0, 0, 0, 0.9)';
-                header.style.backdropFilter = 'blur(20px)';
-            }
-            
-            lastScrollY = currentScrollY;
-        });
-
-        // Intersection observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'slideInUp 0.8s ease-out forwards';
-                }
-            });
-        }, observerOptions);
-
-        // Observe product cards and sections
-        document.querySelectorAll('.product-card, .about-content').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
