@@ -1,502 +1,135 @@
-/* Universal reset for margin, padding, and box-sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default anchor click behavior
+        const target = document.querySelector(this.getAttribute('href')); // Get the target element
+        if (target) {
+            // Scroll to the target element smoothly
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
 
-/* CSS Variables for consistent theming */
-:root {
-    --primary-green: #10b981;
-    --dark-green: #059669;
-    --light-green: #34d399;
-    --neon-green: #00ff88;
-    --black: #000000;
-    --dark-gray: #111827;
-    --medium-gray: #374151;
-    --light-gray: #f9fafb;
-    --white: #ffffff;
-    --star-gold: #FFD700; /* Gold color for stars */
-}
-
-/* Body styles: font, line-height, text color, background, and overflow handling */
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-    color: var(--white);
-    background: var(--black);
-    overflow-x: hidden; /* Prevent horizontal scrollbar */
-}
-
-/* Container for content width and padding */
-.container {
-    max-width: min(1400px, 90vw); /* Max width of 1400px or 90% of viewport width */
-    margin: 0 auto; /* Center the container */
-    padding: 0 clamp(16px, 3vw, 40px); /* Responsive horizontal padding */
-}
-
-/* Header styles: fixed position, background, backdrop filter for blur, and border */
-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000; /* Ensure header is on top */
-    background: rgba(0, 0, 0, 0.9);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(16, 185, 129, 0.2);
-    transition: all 0.3s ease; /* Smooth transitions for scroll effects */
-}
-
-/* Navigation bar layout using flexbox */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 0;
-}
-
-/* Logo sizing: height adjusts responsively, width maintains aspect ratio */
-.logo {
-    height: clamp(40px, 6vw, 60px); /* Responsive height: min 40px, preferred 6vw, max 60px */
-    width: auto; /* Maintain aspect ratio */
-    border-radius: 8px; /* Added for placeholder visibility */
-}
-
-/* Navigation links styling */
-.nav-links {
-    display: flex;
-    list-style: none; /* Remove bullet points */
-    gap: clamp(20px, 4vw, 40px); /* Responsive spacing between links */
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--white);
-    font-weight: 500;
-    font-size: clamp(14px, 2vw, 16px);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-/* Underline effect on hover for navigation links */
-.nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--neon-green);
-    transition: width 0.3s ease;
-}
-
-.nav-links a:hover {
-    color: var(--neon-green);
-}
-
-.nav-links a:hover::after {
-    width: 100%;
-}
-
-/* Hero Section styles: full height, centering, background gradient, and overflow */
-.hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
-    overflow: hidden;
-}
-
-/* Background gradient animation for hero section */
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 30% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-                         radial-gradient(circle at 70% 30%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
-    animation: float 20s ease-in-out infinite;
-}
-
-/* Hero content alignment and max-width */
-.hero-content {
-    text-align: center;
-    z-index: 2;
-    max-width: 800px;
-}
-
-/* Hero logo sizing: height adjusts responsively, width maintains aspect ratio */
-.hero-logo {
-    height: clamp(100px, 25vw, 400px); /* Responsive height: min 100px, preferred 25vw, max 400px */
-    width: auto; /* Maintain aspect ratio */
-    max-width: 90vw; /* Ensure it doesn't exceed 90% of viewport width */
-    margin-bottom: 24px;
-    animation: slideInUp 1s ease-out;
-    border-radius: 12px; /* Added for placeholder visibility */
-}
-
-/* Hero paragraph text styling */
-.hero p {
-    font-size: 20px;
-    margin-bottom: 40px;
-    color: rgba(255, 255, 255, 0.8);
-    animation: slideInUp 1s ease-out 0.2s both;
-    line-height: 1.7;
-}
-
-/* Styling for the green text within hero paragraph */
-.text-green {
-    color: var(--neon-green);
-}
-
-/* Call to action button styling */
-.cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: linear-gradient(135deg, var(--primary-green), var(--neon-green));
-    color: var(--black);
-    padding: 16px 32px;
-    text-decoration: none;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 18px;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
-    animation: slideInUp 1s ease-out 0.4s both;
-}
-
-.cta-button:hover {
-    transform: translateY(-2px); /* Slight lift on hover */
-    box-shadow: 0 12px 48px rgba(16, 185, 129, 0.4); /* Enhanced shadow on hover */
-    scale: 1.05; /* Slight scale effect on hover */
-}
-
-/* General section styling */
-.section {
-    padding: 120px 0;
-    position: relative;
-}
-
-/* Alternate background for even sections */
-.section:nth-child(even) {
-    background: var(--dark-gray);
-}
-
-/* Section heading styling */
-.section h2 {
-    text-align: center;
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    margin-bottom: 80px;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--white) 0%, var(--light-green) 100%);
-    -webkit-background-clip: text; /* Clip background to text */
-    -webkit-text-fill-color: transparent; /* Make text transparent to show background */
-    background-clip: text;
-}
-
-/* Products grid layout */
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); /* Responsive grid columns */
-    gap: 40px;
-    margin-top: 80px;
-}
-
-/* Product card styling */
-.product-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 24px;
-    padding: 40px;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Overlay effect on product card hover */
-.product-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.product-card:hover {
-    transform: translateY(-8px); /* Lift on hover */
-    border-color: var(--neon-green);
-    box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2);
-}
-
-.product-card:hover::before {
-    opacity: 1;
-}
-
-/* Product image sizing and styling */
-.product-image {
-    width: 100%;
-    height: clamp(180px, 20vw, 280px); /* Responsive height */
-    border-radius: 16px;
-    margin-bottom: 32px;
-    object-fit: cover; /* Ensures image covers the area without stretching */
-    transition: all 0.4s ease;
-}
-
-.product-card:hover .product-image {
-    scale: 1.05; /* Slight zoom on hover */
-}
-
-/* Product card heading styling */
-.product-card h3 {
-    font-size: 24px;
-    margin-bottom: 16px;
-    color: var(--white);
-    font-weight: 600;
-    position: relative;
-    z-index: 2;
-}
-
-/* Product card paragraph styling */
-.product-card p {
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.7;
-    font-size: 16px;
-    position: relative;
-    z-index: 2;
-}
-
-/* About Section content layout */
-.about-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns */
-    gap: 80px;
-    align-items: center;
-}
-
-/* About text styling */
-.about-text {
-    font-size: 18px;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.about-text p {
-    margin-bottom: 24px;
-}
-
-/* About image sizing and styling */
-.about-image {
-    height: clamp(300px, 40vw, 500px); /* Responsive height */
-    width: 100%;
-    border-radius: 24px;
-    object-fit: cover; /* Ensures image covers the area without stretching */
-    border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-/* Footer styling */
-footer {
-    background: var(--black);
-    border-top: 1px solid rgba(16, 185, 129, 0.2);
-    padding: 80px 0 40px;
-    text-align: center;
-}
-
-/* Footer logo sizing: height adjusts responsively, width maintains aspect ratio */
-.footer-logo {
-    height: clamp(48px, 8vw, 80px); /* Responsive height: min 48px, preferred 8vw, max 80px */
-    width: auto; /* Maintain aspect ratio */
-    margin: 0 auto 32px;
-    border-radius: 8px; /* Added for placeholder visibility */
-}
-
-/* Styling for payment logos */
-.payment-logos {
-    display: flex;
-    justify-content: center;
-    gap: 16px; /* Space between logos */
-    margin-top: 20px; /* Space above payment logos */
-}
-
-.payment-logo {
-    height: clamp(24px, 4vw, 36px); /* Responsive height for payment logos */
-    width: auto; /* Maintain aspect ratio */
-    filter: grayscale(100%) brightness(150%); /* Make them white/light gray */
-    transition: filter 0.3s ease;
-}
-
-.payment-logo:hover {
-    filter: grayscale(0%) brightness(100%); /* Color on hover */
-}
-
-/* Footer content heading and paragraph styling */
-.footer-content h3 {
-    font-size: 24px;
-    margin-bottom: 16px;
-    color: var(--white);
-}
-
-.footer-content p {
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 8px;
-}
-
-/* Reviews Section Specific Styles */
-.reviews-carousel-container {
-    overflow: hidden; /* Hide overflowing reviews */
-    width: 100%;
-    padding: 20px 0; /* Vertical padding for the carousel */
-}
-
-.reviews-carousel-inner {
-    display: flex;
-    position: relative; /* Needed for JavaScript transform */
-    left: 0; /* Starting position for JavaScript transform */
-    /* Removed white-space: nowrap; to allow text wrapping */
-}
-
-.review-card {
-    flex-shrink: 0; /* Prevent cards from shrinking */
-    width: clamp(300px, 80vw, 450px); /* Responsive width for each card */
-    margin-right: 40px; /* Space between cards */
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 24px;
-    padding: 30px;
-    text-align: left;
-    transition: all 0.3s ease;
-    position: relative;
-    /* Removed overflow: hidden; to allow text to expand vertically */
-}
-
-.review-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.03) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.review-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--light-green);
-    box-shadow: 0 15px 45px rgba(16, 185, 129, 0.15);
-}
-
-.review-card:hover::before {
-    opacity: 1;
-}
-
-.review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.reviewer-name {
-    font-weight: 600;
-    font-size: 1.15rem;
-    color: var(--white);
-}
-
-.stars {
-    display: flex;
-    gap: 2px;
-}
-
-.star-icon {
-    width: 20px;
-    height: 20px;
-    fill: var(--star-gold); /* Gold color for filled stars */
-    stroke: var(--star-gold); /* Outline color for stars */
-    stroke-width: 1;
-}
-
-.star-icon.empty {
-    fill: none; /* Make empty stars just an outline */
-    stroke: rgba(255, 255, 255, 0.3); /* Lighter outline for empty stars */
-}
-
-.review-text {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
-    white-space: normal; /* Allow text to wrap normally */
-}
-
-/* Animations */
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(180deg); }
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none; /* Hide nav links on smaller screens */
+// Header scroll effect: changes background and blur when scrolling down
+let lastScrollY = 0;
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > 100) { // If scrolled more than 100px
+        header.style.background = 'rgba(0, 0, 0, 0.95)'; // Make background slightly more opaque
+        header.style.backdropFilter = 'blur(30px)'; // Increase blur
+    } else {
+        header.style.background = 'rgba(0, 0, 0, 0.9)'; // Original background opacity
+        header.style.backdropFilter = 'blur(20px)'; // Original blur
     }
     
-    .about-content {
-        grid-template-columns: 1fr; /* Stack columns on smaller screens */
-        gap: 40px;
-    }
+    lastScrollY = currentScrollY;
+});
+
+// Intersection observer for animations: applies 'slideInUp' animation when elements enter viewport
+const observerOptions = {
+    threshold: 0.1, // Trigger when 10% of the element is visible
+    rootMargin: '0px 0px -50px 0px' // Adjust the viewport margin for observation
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) { // If the element is currently intersecting the viewport
+            entry.target.style.animation = 'slideInUp 0.8s ease-out forwards'; // Apply animation
+            observer.unobserve(entry.target); // Stop observing once animated
+        }
+    });
+}, observerOptions);
+
+// Observe product cards and about content for animation
+document.querySelectorAll('.product-card, .about-content').forEach(el => {
+    observer.observe(el);
+});
+
+/* Reviews Carousel JavaScript */
+let currentScrollPosition = 0; // Current scroll position of the carousel
+const scrollSpeed = 0.5; // Pixels per frame for scrolling (adjust for speed)
+let animationFrameId; // To store the requestAnimationFrame ID for stopping/starting
+
+/**
+ * Clones the review cards to create a seamless looping effect.
+ * This function should be called once on load.
+ */
+function setupReviewsCarouselClones() {
+    const reviewsCarouselInner = document.getElementById('reviewsCarouselInner');
+    if (!reviewsCarouselInner) return;
+
+    // Get all original review cards
+    const originalReviews = Array.from(reviewsCarouselInner.children);
     
-    .products-grid { /* Apply to reviews grid as well */
-        grid-template-columns: 1fr; /* Stack product cards on smaller screens */
-        gap: 24px;
-    }
-    
-    .product-card, .review-card { /* Apply to review card as well */
-        padding: 24px;
-    }
-    
-    .section {
-        padding: 80px 0;
-    }
-    
-    .container {
-        padding: 0 16px;
-    }
+    // Clone and append them twice to ensure enough content for a continuous loop
+    originalReviews.forEach(card => {
+        reviewsCarouselInner.appendChild(card.cloneNode(true));
+    });
+    originalReviews.forEach(card => {
+        reviewsCarouselInner.appendChild(card.cloneNode(true));
+    });
 }
 
-/* Custom Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
+/**
+ * Animates the reviews carousel to create a continuous scrolling effect.
+ * Uses requestAnimationFrame for smooth animation.
+ */
+function animateReviewsCarousel() {
+    const reviewsCarouselInner = document.getElementById('reviewsCarouselInner');
+    if (!reviewsCarouselInner) return;
+
+    // Get the width of a single review card including its margin-right
+    // Assuming all review cards have the same width and margin
+    const firstReviewCard = reviewsCarouselInner.querySelector('.review-card');
+    if (!firstReviewCard) return;
+
+    const cardWidth = firstReviewCard.offsetWidth + 
+                     parseFloat(getComputedStyle(firstReviewCard).marginRight);
+    
+    // Calculate the total width of the original set of reviews
+    // We cloned the original set twice, so divide total children by 3
+    const originalContentWidth = reviewsCarouselInner.children.length / 3 * cardWidth;
+
+    currentScrollPosition += scrollSpeed;
+
+    // If the current scroll position exceeds the original content width,
+    // reset it to create a seamless loop
+    if (currentScrollPosition >= originalContentWidth) {
+        currentScrollPosition = 0; // Reset to the beginning of the original content
+    }
+
+    reviewsCarouselInner.style.transform = `translateX(-${currentScrollPosition}px)`;
+
+    // Continue the animation loop
+    animationFrameId = requestAnimationFrame(animateReviewsCarousel);
 }
 
-::-webkit-scrollbar-track {
-    background: var(--black);
+/**
+ * Initializes the reviews carousel: sets up clones and starts animation.
+ */
+function initializeReviewsCarousel() {
+    setupReviewsCarouselClones(); // Setup clones first
+    animateReviewsCarousel(); // Start the animation
 }
 
-::-webkit-scrollbar-thumb {
-    background: var(--primary-green);
-    border-radius: 4px;
-}
+// Start the reviews carousel animation when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeReviewsCarousel();
+});
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--neon-green);
+// Optional: Pause animation on hover for better readability
+const reviewsCarouselContainer = document.querySelector('.reviews-carousel-container');
+if (reviewsCarouselContainer) {
+    reviewsCarouselContainer.addEventListener('mouseenter', () => {
+        cancelAnimationFrame(animationFrameId); // Stop animation on hover
+    });
+
+    reviewsCarouselContainer.addEventListener('mouseleave', () => {
+        animateReviewsCarousel(); // Resume animation on mouse leave
+    });
 }
