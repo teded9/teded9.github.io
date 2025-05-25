@@ -3,250 +3,503 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beyond Cannibal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Future Ground - Revolutionary Lab-Grown Meat</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-green: #10b981;
+            --dark-green: #059669;
+            --light-green: #34d399;
+            --neon-green: #00ff88;
+            --black: #000000;
+            --dark-gray: #111827;
+            --medium-gray: #374151;
+            --light-gray: #f9fafb;
+            --white: #ffffff;
+        }
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #000000; /* Black background */
-            color: #FFFFFF; /* White text */
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--white);
+            background: var(--black);
+            overflow-x: hidden;
         }
-        .hero-bg {
-            background-image: url('https://placehold.co/1920x1080/000000/222222?text=Abstract+Culinary+Background'); /* Black bg, dark grey text */
-            background-size: cover;
-            background-position: center;
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
-        .accent-color {
-            color: #22c55e; /* Green accent */
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+            transition: all 0.3s ease;
         }
-        .bg-accent {
-            background-color: #22c55e; /* Green background */
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
         }
-        .border-accent {
-            border-color: #22c55e; /* Green border */
+        
+        .logo {
+            height: 48px;
+            width: auto;
+            filter: brightness(0) invert(1);
         }
-        .accent-color-secondary {
-            color: #ef4444; /* Red accent */
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
         }
-        .bg-accent-secondary {
-            background-color: #ef4444; /* Red background */
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
         }
-        .border-accent-secondary {
-            border-color: #ef4444; /* Red border */
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-green);
+            transition: width 0.3s ease;
         }
-        .nav-link { /* Tailwind classes will be used directly in HTML for these, but this is a fallback if needed */
-            @apply px-3 py-2 rounded-md text-sm font-medium text-neutral-200 hover:text-white hover:bg-neutral-800 transition-colors;
+        
+        .nav-links a:hover {
+            color: var(--neon-green);
         }
-        .section-title {
-            @apply text-3xl sm:text-4xl font-bold mb-8 text-center;
+        
+        .nav-links a:hover::after {
+            width: 100%;
         }
-        .card {
-            background-color: #18181b; /* Tailwind zinc-900 - Dark gray for cards */
-            @apply p-6 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-300;
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--black) 0%, var(--dark-gray) 100%);
+            overflow: hidden;
         }
-        .btn {
-            @apply px-6 py-3 rounded-md font-semibold transition-colors duration-300;
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
         }
-        .btn-primary {
-            background-color: #22c55e; /* Green */
-            color: #FFFFFF; /* White text */
+        
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
         }
-        .btn-primary:hover {
-            background-color: #16a34a; /* Darker Green */
+        
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--neon-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInUp 1s ease-out;
         }
-        .btn-secondary {
-            border: 2px solid #ef4444; /* Red border */
-            color: #ef4444; /* Red text */
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            animation: slideInUp 1s ease-out 0.2s both;
+            line-height: 1.7;
         }
-        .btn-secondary:hover {
-            background-color: #ef4444; /* Red background */
-            color: #FFFFFF; /* White text */
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, var(--primary-green), var(--neon-green));
+            color: var(--black);
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.3);
+            animation: slideInUp 1s ease-out 0.4s both;
         }
-        .bg-section-darker { /* Custom class for sections like Philosophy, Innovation */
-            background-color: #0a0a0a; /* Very dark gray, almost black */
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 48px rgba(16, 185, 129, 0.4);
+            scale: 1.05;
         }
-        /* Custom scrollbar */
+        
+        /* Section Styling */
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+        
+        .section:nth-child(even) {
+            background: var(--dark-gray);
+        }
+        
+        .section h2 {
+            text-align: center;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 80px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+        }
+        
+        .product-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--neon-green);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2);
+        }
+        
+        .product-card:hover::before {
+            opacity: 1;
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 240px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+        
+        .product-card:hover .product-image {
+            scale: 1.05;
+        }
+        
+        .product-card h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: var(--white);
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .product-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            font-size: 16px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .about-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .about-text p {
+            margin-bottom: 24px;
+        }
+        
+        .about-image {
+            height: 500px;
+            border-radius: 24px;
+            object-fit: cover;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--black);
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            height: 64px;
+            width: auto;
+            margin: 0 auto 32px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .footer-content h3 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: var(--white);
+        }
+        
+        .footer-content p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+        
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .product-card {
+                padding: 24px;
+            }
+            
+            .section {
+                padding: 80px 0;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+        }
+        
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
+        
         ::-webkit-scrollbar-track {
-            background: #0f0f0f; /* Darker track for black theme */
+            background: var(--black);
         }
+        
         ::-webkit-scrollbar-thumb {
-            background: #22c55e; /* Green thumb */
+            background: var(--primary-green);
             border-radius: 4px;
         }
+        
         ::-webkit-scrollbar-thumb:hover {
-            background: #16a34a; /* Darker green on hover */
+            background: var(--neon-green);
         }
     </style>
 </head>
-<body class="antialiased">
-
-    <header class="bg-black shadow-md sticky top-0 z-50"> <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="#" class="text-2xl font-bold accent-color">Beyond The Cannibal</a>
-                </div>
-                <nav class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#home" class="nav-link text-neutral-200 hover:bg-neutral-800">Home</a>
-                        <a href="#philosophy" class="nav-link text-neutral-200 hover:bg-neutral-800">Philosophy</a>
-                        <a href="#products" class="nav-link text-neutral-200 hover:bg-neutral-800">Products</a>
-                        <a href="#innovation" class="nav-link text-neutral-200 hover:bg-neutral-800">Innovation</a>
-                        <a href="#contact" class="nav-link text-neutral-200 hover:bg-neutral-800">Contact</a>
-                    </div>
-                </nav>
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-neutral-200 hover:text-white focus:outline-none focus:text-white">
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div id="mobile-menu" class="md:hidden hidden bg-zinc-900"> <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Home</a>
-            <a href="#philosophy" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Philosophy</a>
-            <a href="#products" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Products</a>
-            <a href="#innovation" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Innovation</a>
-            <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-200 hover:text-white hover:bg-neutral-800">Contact</a>
-        </div>
+<body>
+    <header>
+        <nav class="container">
+            <img src="logo.png" alt="Future Ground Logo" class="logo">
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-center relative">
-        <div class="absolute inset-0 bg-black opacity-70"></div> <div class="relative z-10 p-4">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                The <span class="accent-color">Future of Sustenance</span>. Redefined.
-            </h1>
-            <p class="text-lg sm:text-xl text-neutral-200 mb-8 max-w-2xl mx-auto"> Beyond The Cannibal pioneers a revolutionary approach to culinary artistry, crafting exquisite synthetic meats that challenge convention and redefine the boundaries of taste.
-            </p>
-            <div>
-                <a href="#products" class="btn btn-primary mr-4 mb-4 sm:mb-0">Explore Our Selections</a>
-                <a href="#philosophy" class="btn btn-secondary">Our Vision</a>
-            </div>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Future Ground</h1>
+            <p>Unethically Sourced. Scientifically Perfected. Uniquely Human.</p>
+            <a href="#products" class="cta-button">
+                Discover Products
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                </svg>
+            </a>
         </div>
     </section>
 
-    <section id="philosophy" class="py-16 sm:py-24 bg-section-darker"> <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title">Our <span class="accent-color">Philosophy</span></h2>
-            <div class="max-w-3xl mx-auto text-center text-lg text-neutral-300 space-y-6"> <p>
-                    At Beyond The Cannibal, we believe in pushing the frontiers of food science. Our mission is to provide unique culinary experiences that are ethically conceived and meticulously perfected. We embrace innovation to offer sophisticated alternatives for the discerning palate.
-                </p>
-                <p>
-                    Our process is rooted in <strong class="text-neutral-100">bio-engineering excellence</strong> and a commitment to <strong class="text-neutral-100">unparalleled quality</strong>. We are not just creating food; we are crafting the future of nourishment, one that is bold, conscious, and unequivocally novel.
-                </p>
-                 <p class="italic">"unethically Sourced. Scientifically Perfected. Uniquely Human.<span class="accent-color">-ChatGPT.</span>"</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="products" class="py-16 sm:py-24">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title">Curated <span class="accent-color">Selections</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card">
-                    <img src="https://placehold.co/600x400/111111/22c55e?text=Prime+Cut+Alpha" alt="Prime Cut Alpha" class="w-full h-48 object-cover rounded-t-lg mb-4" onerror="this.src='https://placehold.co/600x400/111111/FFFFFF?text=Image+Error'; this.alt='Error loading image'">
-                    <h3 class="text-2xl font-semibold mb-2 accent-color">Prime Cut Alpha</h3>
-                    <p class="text-neutral-300 mb-4">A flagship offering, known for its robust texture and complex flavor profile. Cultivated for the adventurous connoisseur.</p> <a href="#" class="text-accent font-semibold hover:underline">Learn More &raquo;</a>
+    <section id="products" class="section">
+        <div class="container">
+            <h2>Our Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="logo.png" alt="Lab-Grown Beef" class="product-image">
+                    <h3>Premium Ground Beef</h3>
+                    <p>Indistinguishable from traditional beef, our lab-grown ground beef delivers the same taste, texture, and nutritional value without environmental impact. Perfect for burgers, tacos, and more.</p>
                 </div>
-                <div class="card">
-                    <img src="https://placehold.co/600x400/111111/22c55e?text=Artisan+Blend+Beta" alt="Artisan Blend Beta" class="w-full h-48 object-cover rounded-t-lg mb-4" onerror="this.src='https://placehold.co/600x400/111111/FFFFFF?text=Image+Error'; this.alt='Error loading image'">
-                    <h3 class="text-2xl font-semibold mb-2 accent-color">Artisan Blend Beta</h3>
-                    <p class="text-neutral-300 mb-4">A delicate and versatile blend, perfect for a variety of culinary applications. Subtly nuanced, exceptionally refined.</p> <a href="#" class="text-accent font-semibold hover:underline">Learn More &raquo;</a>
+                <div class="product-card">
+                    <img src="logo.png" alt="Lab-Grown Chicken" class="product-image">
+                    <h3>product 2</h3>
+                    <p> description here.</p>
                 </div>
-                <div class="card">
-                    <img src="https://placehold.co/600x400/111111/22c55e?text=Signature+Gamma" alt="Signature Gamma" class="w-full h-48 object-cover rounded-t-lg mb-4" onerror="this.src='https://placehold.co/600x400/111111/FFFFFF?text=Image+Error'; this.alt='Error loading image'">
-                    <h3 class="text-2xl font-semibold mb-2 accent-color">Signature Gamma</h3>
-                    <p class="text-neutral-300 mb-4">Our most exclusive creation. Limited availability. An unparalleled sensory journey for the truly discerning.</p> <a href="#" class="text-accent font-semibold hover:underline">Learn More &raquo;</a>
+                <div class="product-card">
+                    <img src="logo.png" alt="Lab-Grown Pork" class="product-image">
+                    <h3> product 3</h3>
+                    <p> description here.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="innovation" class="py-16 sm:py-24 bg-section-darker"> <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title">The <span class="accent-color">Science</span> of Sensation</h2>
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="md:w-1/2">
-                    <img src="https://placehold.co/800x600/0A0A0A/22c55e?text=Bio-Lab+Concept" alt="Innovation Lab" class="rounded-lg shadow-xl w-full" onerror="this.src='https://placehold.co/800x600/0A0A0A/FFFFFF?text=Image+Error'; this.alt='Error loading image'">
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>At Future Ground, we're pioneering the future of food through cutting-edge cellular agriculture. Our mission is to create real meat without the need for animal farming, dramatically reducing environmental impact while delivering identical taste and nutrition.</p>
+                    
+                    <p>Using advanced biotechnology and precision fermentation, we grow meat directly from animal cells in our state-of-the-art bioreactors. This revolutionary process eliminates the need for raising and slaughtering animals while producing meat that's molecularly identical to conventional products.</p>
+                    
+                    <p>Join us in building a more sustainable future where exceptional taste meets environmental responsibility. The future of food is here.</p>
                 </div>
-                <div class="md:w-1/2 text-lg text-neutral-300 space-y-4"> <p>Our state-of-the-art facilities and pioneering research team are at the heart of Beyond The Cannibal. We leverage cutting-edge cellular agriculture and tissue engineering techniques to replicate complex biological structures with astonishing fidelity.</p>
-                    <p>Every product is the result of rigorous scientific endeavor, ensuring not only ethical production but also a taste and texture profile that meets the highest standards of gastronomic excellence. We are constantly exploring new methodologies to enhance sustainability and expand the horizons of synthetic biology.</p>
-                    <a href="#" class="btn btn-primary mt-6">Discover Our Research</a>
-                </div>
+                <img src="logo.png" alt="Future Ground Facility" class="about-image">
             </div>
         </div>
     </section>
 
-    <section id="contact" class="py-16 sm:py-24">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="section-title">Connect With <span class="accent-color">Us</span></h2>
-            <div class="max-w-xl mx-auto card">
-                <p class="text-center text-neutral-300 mb-8">For inquiries, partnerships, or to learn more about the future of food, please reach out. We operate with discretion and value your interest.</p> <form action="#" method="POST">
-                    <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-neutral-200 mb-1">Full Name</label> <input type="text" name="name" id="name" class="w-full px-3 py-2 rounded-md bg-neutral-700 text-neutral-100 border border-neutral-600 focus:ring-green-500 focus:border-green-500" placeholder="Your Name"> </div>
-                    <div class="mb-4">
-                        <label for="email" class="block text-sm font-medium text-neutral-200 mb-1">Email Address</label> <input type="email" name="email" id="email" class="w-full px-3 py-2 rounded-md bg-neutral-700 text-neutral-100 border border-neutral-600 focus:ring-green-500 focus:border-green-500" placeholder="you@example.com"> </div>
-                    <div class="mb-6">
-                        <label for="message" class="block text-sm font-medium text-neutral-200 mb-1">Message</label> <textarea name="message" id="message" rows="4" class="w-full px-3 py-2 rounded-md bg-neutral-700 text-neutral-100 border border-neutral-600 focus:ring-green-500 focus:border-green-500" placeholder="Your inquiry..."></textarea> </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary w-full sm:w-auto">Send Message</button>
-                    </div>
-                </form>
-                <p class="text-xs text-neutral-400 mt-6 text-center">Please note: Beyond The Cannibal is a conceptual entity. This form is for demonstration purposes only.</p> </div>
-        </div>
-    </section>
-
-    <footer class="bg-black text-neutral-300 py-12"> <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="mb-2">&copy; <span id="currentYear"></span> Beyond The Cannibal. All Rights Reserved (Conceptually).</p>
-            <p class="text-sm">Pioneering the Next Wave of Culinary Evolution.</p>
-            <div class="mt-4">
-                <a href="#" class="inline-block mx-2 hover:text-accent transition-colors"> <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
-                </a>
-                <a href="#" class="inline-block mx-2 hover:text-accent transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
-                </a>
-                <a href="#" class="inline-block mx-2 hover:text-accent transition-colors">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.927 8.177c.05.261.073.53.073.807 0 2.441-1.864 5.254-5.258 5.254-1.042 0-2.01-.305-2.825-.828.145.017.292.026.44.026.865 0 1.657-.294 2.285-.786a1.844 1.844 0 01-1.72-1.277c.298.057.605.087.922.087.355 0 .696-.047.993-.13a1.84 1.84 0 01-1.477-1.803v-.023c.44.244.947.39 1.483.407A1.838 1.838 0 018.96 8.055a5.235 5.235 0 003.806 1.93 1.84 1.84 0 011.79-2.469c.797 0 1.517.337 2.023.879.63-.124 1.224-.355 1.756-.67a1.842 1.842 0 01-1.217 1.608z" clip-rule="evenodd" /></svg>
-                </a>
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <img src="logo.png" alt="Future Ground Logo" class="footer-logo">
+                <h3>Future Ground</h3>
+                <p>Contact: hello@futureground.com</p>
+                <p>Phone: 1-800-FUTURE-1</p>
+                <p style="margin-top: 32px; opacity: 0.6;">&copy; 2025 Future Ground. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // JavaScript for mobile menu toggle
-        const menuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Close mobile menu when a link is clicked
-        const mobileNavLinks = mobileMenu.querySelectorAll('a');
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-        
-        // Set current year in footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Smooth scrolling for anchor links
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 }
             });
         });
-    </script>
 
+        // Header scroll effect
+        let lastScrollY = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+                header.style.backdropFilter = 'blur(30px)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+                header.style.backdropFilter = 'blur(20px)';
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        // Intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe product cards and sections
+        document.querySelectorAll('.product-card, .about-content').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
