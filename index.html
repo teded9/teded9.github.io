@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beyond cannibal</title>
-   <link rel="stylesheet" href="https://Beyondcannibal.com/style.css">
+    <link rel="stylesheet" href="https://Beyondcannibal.com/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* CSS for the top navigation logo */
@@ -53,7 +53,7 @@
             position: relative;
             background: transparent;
             padding: 20px 0;
-            height: 280px;
+            height: 360px; /* Adjusted height for smaller text */
         }
 
         .reviews-carousel-inner {
@@ -61,19 +61,36 @@
             position: absolute;
             top: 20px;
             left: 0;
-            height: 240px;
+            height: 320px; /* Adjusted height to match container */
             will-change: transform;
+            /* Add animation for continuous scrolling */
+            animation: scrollReviews 35s linear infinite; /* Adjusted duration for new width */
+            /* Ensure the inner container is wide enough to hold all duplicated cards */
+            width: max-content;
+        }
+
+        /* Define the keyframes for the scrolling animation */
+        @keyframes scrollReviews {
+            0% { transform: translateX(0); }
+            /* Adjusted for new card width (350px + 20px margin = 370px) */
+            /* There are 7 original cards, so 7 * 370px = 2590px */
+            100% { transform: translateX(-2590px); }
+        }
+
+        /* Pause animation on hover over the carousel container */
+        .reviews-carousel-container:hover .reviews-carousel-inner {
+            animation-play-state: paused;
         }
 
         .review-card {
-            flex: 0 0 300px;
+            flex: 0 0 350px; /* Width of each review card */
             margin-right: 20px;
             background: #000000; /* Black background */
             border-radius: 12px;
             padding: 24px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             border: 1px solid #333333; /* Dark border for default state */
-            height: 200px;
+            height: 280px; /* Adjusted height to accommodate smaller text */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -97,7 +114,7 @@
         .reviewer-name {
             font-weight: 600;
             color: #ffffff; /* White text for black background */
-            font-size: 16px;
+            font-size: 18px; /* Reviewer name font size */
         }
 
         .stars {
@@ -106,8 +123,8 @@
         }
 
         .star-icon {
-            width: 16px;
-            height: 16px;
+            width: 20px; /* Star icon size */
+            height: 20px; /* Star icon size */
             fill: #fbbf24;
             stroke: none;
         }
@@ -119,7 +136,7 @@
         .review-text {
             color: #e5e7eb; /* Light gray text for better contrast on black */
             line-height: 1.6;
-            font-size: 14px;
+            font-size: 18px; /* Decreased font size for reviews */
             margin: 0;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -127,7 +144,7 @@
 
         @media (max-width: 768px) {
             .review-card {
-                flex: 0 0 250px;
+                flex: 0 0 90%; /* Adjusted for mobile to take up more width */
                 margin-right: 15px;
             }
             
@@ -135,6 +152,9 @@
             .review-card:hover {
                 border: 2px solid #48CCAD; /* Thinner teal for mobile */
                 box-shadow: 0 4px 8px rgba(72, 204, 173, 0.3);
+            }
+            .review-text {
+                font-size: 16px; /* Adjusted font size for mobile */
             }
         }
     </style>
@@ -196,7 +216,7 @@
             <h2>About Us</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>i dont know</p>
+                    <p>At Beyond Cannibal, we are pioneers in synthetic human needs, dedicated to revolutionizing culinary experiences. We specialize in crafting high-quality synthetic human meat, meticulously developed for human consumption. Our innovative approach combines cutting-edge science with a commitment to fulfilling unique dietary preferences, offering a truly distinctive and ethically ambiguous alternative.</p>
                 </div>
                 <img src="Aboutus.webp" alt="just a funny picture I guess lmao" class="about-image">
             </div>
@@ -261,7 +281,7 @@
                                 <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
                             </div>
                         </div>
-                        <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing. One star."</p>
+                        <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
                     </div>
 
                     <div class="review-card">
