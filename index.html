@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beyond cannibal</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="https://Beyondcannibal.com/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -73,7 +73,7 @@
             height: 320px; /* Adjusted height to match container */
             will-change: transform;
             /* Add animation for continuous scrolling */
-            animation: scrollReviews 35s linear infinite; /* Adjusted duration for new width */
+            animation: scrollReviews 20s linear infinite; /* Adjusted duration for seamless loop */
             /* Ensure the inner container is wide enough to hold all duplicated cards */
             width: max-content;
         }
@@ -81,9 +81,8 @@
         /* Define the keyframes for the scrolling animation */
         @keyframes scrollReviews {
             0% { transform: translateX(0); }
-            /* Adjusted for new card width (350px + 20px margin = 370px) */
-            /* There are 7 original cards, so 7 * 370px = 2590px */
-            100% { transform: translateX(-2590px); }
+            /* Scrolls the width of the 4 unique cards (350px width + 20px margin = 370px per card) */
+            100% { transform: translateX(-1480px); /* 4 * 370px = 1480px */ }
         }
 
         /* Pause animation on hover over the carousel container */
@@ -365,3 +364,6 @@
         </div>
     </footer>
     
+    <script src="https://www.beyondcannibal.com/script.js"></script>
+</body>
+</html>
