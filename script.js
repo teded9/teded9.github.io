@@ -1,4 +1,4 @@
-// Reviews Carousel Implementation with Immediate Start
+// Reviews Carousel Implementation with Pre-positioned Cards
 class ReviewsCarousel {
   constructor() {
     this.container = document.getElementById("reviewsCarouselInner");
@@ -34,7 +34,7 @@ class ReviewsCarousel {
     );
 
     this.setupCarousel();
-    this.positionInitialCards();
+    this.positionCardsAcrossScreen();
     this.start();
 
     // Event listeners
@@ -48,8 +48,8 @@ class ReviewsCarousel {
     this.container.innerHTML = "";
     this.allCards = [];
 
-    // Calculate how many cards we need to fill screen + buffer
-    const cardsNeeded = Math.ceil(this.containerWidth / this.cardWidth) + 6;
+    // Calculate how many cards we need to fill screen + extra buffer
+    const cardsNeeded = Math.ceil(this.containerWidth / this.cardWidth) + 8;
     const totalSets = Math.ceil(cardsNeeded / this.originalCards.length);
 
     // Clone cards to fill the viewport and provide buffer
@@ -62,10 +62,15 @@ class ReviewsCarousel {
     }
   }
 
-  positionInitialCards() {
-    // Position cards so they immediately fill the viewport
-    // Start position ensures cards are visible from the beginning
-    this.currentPosition = 0;
+  positionCardsAcrossScreen() {
+    // Position cards so they're distributed across the screen from the start
+    // This makes it look like the animation is already in progress
+    const oneSetWidth = this.originalCards.length * this.cardWidth;
+    
+    // Start somewhere in the middle of a set, not at the beginning
+    // This creates the illusion that scrolling was already happening
+    this.currentPosition = -(oneSetWidth * 0.3); // Start 30% into the first set
+    
     this.updatePosition();
   }
 
@@ -118,7 +123,7 @@ class ReviewsCarousel {
       this.containerWidth = newWidth;
       this.pause();
       this.setupCarousel();
-      this.positionInitialCards();
+      this.positionCardsAcrossScreen();
       this.start();
     }
   }
@@ -126,8 +131,10 @@ class ReviewsCarousel {
   destroy() {
     this.pause();
     window.removeEventListener("resize", this.handleResize);
-    this.container.removeEventListener("mouseenter", this.pause);
-    this.container.removeEventListener("mouseleave", this.start);
+    if (this.container) {
+      this.container.removeEventListener("mouseenter", this.pause);
+      this.container.removeEventListener("mouseleave", this.start);
+    }
   }
 }
 
