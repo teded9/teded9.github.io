@@ -9,23 +9,23 @@
     <style>
         /* CSS for the top navigation logo */
         .nav-logo {
-            width: 200px; /* Adjusted size */
-            height: auto; /* Maintain aspect ratio */
-            margin-right: 15px; /* Space between logo and links */
-            vertical-align: middle; /* Align with nav links */
+            width: 200px;
+            height: auto;
+            margin-right: 15px;
+            vertical-align: middle;
         }
 
         /* CSS for the hero logo to make it look good */
         .hero-logo {
-            width: 400px; /* Adjust this value to make the logo larger or smaller */
-            height: auto; /* Keeps the image from distorting */
-            max-width: 90%; /* Ensures it's responsive and doesn't overflow on small screens */
+            width: 400px;
+            height: auto;
+            max-width: 90%;
         }
 
         header nav.container {
             display: flex;
-            align-items: center; /* Vertically align logo and links */
-            justify-content: space-between; /* Space out logo and links */
+            align-items: center;
+            justify-content: space-between;
             padding: 20px;
         }
 
@@ -44,6 +44,98 @@
             text-decoration: none;
             color: #333;
             font-weight: 600;
+        }
+
+        /* Reviews Carousel Styles */
+        .reviews-carousel-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            background: transparent;
+            padding: 20px 0;
+            height: 280px;
+        }
+
+        .reviews-carousel-inner {
+            display: flex;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 240px;
+            will-change: transform;
+        }
+
+        .review-card {
+            flex: 0 0 300px;
+            margin-right: 20px;
+            background: #000000; /* Black background */
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333333; /* Dark border for default state */
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+            cursor: pointer;
+        }
+
+        /* Thinner teal hover outline effect */
+        .review-card:hover {
+            border: 3px solid #48CCAD; /* Thinner teal border on hover */
+            box-shadow: 0 6px 12px rgba(72, 204, 173, 0.3); /* Teal glow */
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #ffffff; /* White text for black background */
+            font-size: 16px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star-icon {
+            width: 16px;
+            height: 16px;
+            fill: #fbbf24;
+            stroke: none;
+        }
+
+        .star-icon.empty {
+            fill: #666666; /* Darker empty stars for black background */
+        }
+
+        .review-text {
+            color: #e5e7eb; /* Light gray text for better contrast on black */
+            line-height: 1.6;
+            font-size: 14px;
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 768px) {
+            .review-card {
+                flex: 0 0 250px;
+                margin-right: 15px;
+            }
+            
+            /* Thinner border on mobile for better proportion */
+            .review-card:hover {
+                border: 2px solid #48CCAD; /* Thinner teal for mobile */
+                box-shadow: 0 4px 8px rgba(72, 204, 173, 0.3);
+            }
         }
     </style>
 </head>
@@ -239,11 +331,11 @@
                 <h3>Beyond Cannibal</h3>
                 <p>Contact: Josh@JoshRyan.fyi</p>
                 <p>Phone: 1-800-BEYOND-1</p>
-
                 <p>Beyond cannibal © 2025 by Josh Ryan is licensed under CC BY-SA 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/4.0/</p>
-<script src="script.js"></script>
             </div>
         </div>
     </footer>
+    
+    <script src="https://www.beyondcannibal.com/script.js"></script>
 </body>
 </html>
