@@ -151,9 +151,18 @@
         }
 
         @media (max-width: 768px) {
+            .reviews-carousel-container {
+                padding: 20px 10px; /* Added horizontal padding for mobile */
+                height: 320px; /* Adjusted height for mobile */
+            }
+            .reviews-carousel-inner {
+                height: 280px; /* Adjusted height for mobile */
+            }
             .review-card {
-                flex: 0 0 90%; /* Adjusted for mobile to take up more width */
+                flex: 0 0 calc(100% - 30px); /* Adjusted for mobile to take up more width, accounting for margin and container padding */
                 margin-right: 15px;
+                padding: 16px; /* Reduced padding for smaller screens */
+                height: 250px; /* Adjusted height for mobile */
             }
             
             /* Thinner border on mobile for better proportion */
