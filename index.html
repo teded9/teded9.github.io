@@ -62,7 +62,7 @@
 
     /* Reviews Carousel Styles */
     .reviews-carousel-container {
-      overflow: hidden;
+      overflow: hidden; /* This hides the scrollbar */
       width: 100%;
       position: relative;
       background: transparent;
@@ -74,28 +74,32 @@
       display: flex;
       position: absolute;
       top: 20px;
-      left: 0;
+      left: 0; /* Original content starts at the left edge for right-to-left scroll */
       height: 320px;
       will-change: transform;
-      animation: scrollReviews 20s linear infinite;
-      width: max-content;
+      animation: scrollReviewsRightToLeft 20s linear infinite;
+      width: max-content; /* Allows all review cards to be in one line */
     }
 
-    @keyframes scrollReviews {
+    /* Keyframes for RIGHT-TO-LEFT scroll */
+    @keyframes scrollReviewsRightToLeft {
       0% {
-        transform: translateX(0);
+        transform: translateX(0); /* Start with no translation */
       }
       100% {
-        transform: translateX(-1480px); /* 4 * (350px + 20px) */
+        /* Move LEFT by the total width of one set of original reviews (4 cards * (350px width + 20px margin)) */
+        transform: translateX(-1480px); /* 4 * 370px = 1480px */
       }
     }
 
+    /* PAUSE animation on hover/tap */
     .reviews-carousel-container:hover .reviews-carousel-inner {
       animation-play-state: paused;
     }
 
     .review-card {
-      flex: 0 0 350px;
+      /* Ensure consistent width across all devices */
+      flex: 0 0 350px; /* Each card is 350px wide */
       margin-right: 20px;
       background: #000;
       border-radius: 12px;
@@ -151,34 +155,6 @@
       margin: 0;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-
-
-
-      .reviews-carousel-inner {
-        position: static;
-        display: flex;
-        width: auto;
-        animation: none;
-      }
-
-      .review-card {
-        flex: 0 0 80%;
-        max-width: 80%;
-        margin-right: 16px;
-        scroll-snap-align: start;
-        height: auto;
-        padding: 16px;
-      }
-
-      .review-card:hover {
-        border: 2px solid #48ccad;
-        box-shadow: 0 4px 8px rgba(72, 204, 173, 0.3);
-      }
-
-      .review-text {
-        font-size: 16px;
-      }
     }
   </style>
 </head>
@@ -298,7 +274,6 @@
       <h2>Customer Reviews</h2>
       <div class="reviews-carousel-container">
         <div class="reviews-carousel-inner" id="reviewsCarouselInner">
-          <!-- 8 Review Cards (4 original + 4 duplicates) -->
           <div class="review-card">
             <div class="review-header">
               <span class="reviewer-name">Jeffrey Dahmer</span>
@@ -351,131 +326,148 @@
               easier. Five stars!"
             </p>
           </div>
-<div class="review-card">
-                        <div class="review-header">
-                            <span class="reviewer-name">Armin Meiwes</span>
-                            <div class="stars">
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                        </div>
-                        <p class="review-text">"Absolutely love this product! The taste is incredibly 
-authentic, and knowing it's sustainably sourced makes it even 
-better. Five stars!"</p>
-                    </div>
 
-                    <div class="review-card">
-                        <div class="review-header">
-                            <span class="reviewer-name">Issei Sagawa</span>
-                            <div class="stars">
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                        </div>
-                        <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
-                    </div>
-
-                    <div class="review-card">
-                        <div class="review-header">
-                            <span class="reviewer-name">Albert Fish</span>
-                            <div class="stars">
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                        </div>
-                        <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
-                    </div>
-
-                    <div class="review-card">
-                        <div class="review-header">
-                            <span class="reviewer-name">Jeffrey Dahmer</span>
-                            <div class="stars">
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                        </div>
-                        <p class="review-text">"I wish I knew about Beyond Cannibal before I died. The ethical sourcing and scientific perfection would have made my life so much easier. Five stars!"</p>
-                    </div>
-
-                    <div class="review-card">
-                        <div class="review-header">
-                            <span class="reviewer-name">Armin Meiwes</span>
-                            <div class="stars">
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                        </div>
-                        <p class="review-text">"Absolutely love this product! The taste is incredibly authentic, and knowing it's sustainably sourced makes it even better. Five stars!"</p>
-                    </div>
-
-                    <div class="review-card">
-                        <div class="review-header">
-                            <span class="reviewer-name">Issei Sagawa</span>
-                            <div class="stars">
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                        </div>
-                        <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
-                    </div>
-
-                    <div class="review-card">
-                        <div class="review-header">
-                            <span class="reviewer-name">Albert Fish</span>
-                            <div class="stars">
-                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                            </div>
-                        </div>
-                        <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
-                    </div>
-                </div>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Armin Meiwes</span>
+              <div class="stars">
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+              </div>
             </div>
-        </div>
-    </section>
+            <p class="review-text">"Absolutely love this product! The taste is incredibly
+              authentic, and knowing it's sustainably sourced makes it even
+              better. Five stars!"</p>
+          </div>
 
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <img src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp" alt="Beyond Cannibal Logo" class="footer-logo">
-                <h3>Beyond Cannibal</h3>
-                <p>Contact: Josh@JoshRyan.fyi</p>
-                <p>Phone: 1-800-BEYOND-1</p>
-                <p>Beyond cannibal © 2025 by Josh Ryan is licensed under CC BY-SA 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/4.0/</p>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Issei Sagawa</span>
+              <div class="stars">
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+              </div>
             </div>
-        </div>
-    </footer>
-    
-    <script src="https://www.beyondcannibal.com/script.js"></script>
-</body>
-</html>
+            <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
+          </div>
 
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Albert Fish</span>
+              <div class="stars">
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+              </div>
+            </div>
+            <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
+          </div>
 
-          <!-- Repeat for Armin Meiwes, Issei Sagawa, Albert Fish, then duplicates -->
-          <!-- … (omitted for brevity, just replicate the above 4 cards again) -->
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Jeffrey Dahmer</span>
+              <div class="stars">
+                <svg class="star-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
+                       5.828 1.48 8.279L12 18.896l-7.416
+                       3.817 1.48-8.279-6.064-5.828
+                       8.332-1.151z"
+                  />
+                </svg>
+                <svg class="star-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
+                       5.828 1.48 8.279L12 18.896l-7.416
+                       3.817 1.48-8.279-6.064-5.828
+                       8.332-1.151z"
+                  />
+                </svg>
+                <svg class="star-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
+                       5.828 1.48 8.279L12 18.896l-7.416
+                       3.817 1.48-8.279-6.064-5.5828
+                       8.332-1.151z"
+                  />
+                </svg>
+                <svg class="star-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
+                       5.828 1.48 8.279L12 18.896l-7.416
+                       3.817 1.48-8.279-6.064-5.828
+                       8.332-1.151z"
+                  />
+                </svg>
+                <svg class="star-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
+                       5.828 1.48 8.279L12 18.896l-7.416
+                       3.817 1.48-8.279-6.064-5.828
+                       8.332-1.151z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <p class="review-text">
+              "I wish I knew about Beyond Cannibal before I died. The ethical
+              sourcing and scientific perfection would have made my life so much
+              easier. Five stars!"
+            </p>
+          </div>
 
-        </div>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Armin Meiwes</span>
+              <div class="stars">
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+              </div>
+            </div>
+            <p class="review-text">"Absolutely love this product! The taste is incredibly
+              authentic, and knowing it's sustainably sourced makes it even
+              better. Five stars!"</p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Issei Sagawa</span>
+              <div class="stars">
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+              </div>
+            </div>
+            <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Albert Fish</span>
+              <div class="stars">
+                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+              </div>
+            </div>
+            <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
+          </div>
+          </div>
       </div>
     </div>
   </section>
@@ -500,6 +492,5 @@ better. Five stars!"</p>
     </div>
   </footer>
 
-  <script src="https://www.beyondcannibal.com/script.js"></script>
 </body>
 </html>
