@@ -461,3 +461,84 @@ footer {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--neon-green);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* fucking */
+
+.reviews-carousel-container {
+  overflow-x: auto;
+  width: 100%;
+  background: transparent;
+  padding: 20px 0;
+  height: auto;
+}
+
+.reviews-carousel-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  animation: none;
+  position: static;
+  width: 100%;
+}
+
+.review-card {
+  flex: 1 1 300px;
+  max-width: 350px;
+  background: #000;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Mobile-specific behavior: horizontal scroll carousel */
+@media (max-width: 768px) {
+  .reviews-carousel-inner {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    animation: scrollReviews 20s linear infinite;
+    width: max-content;
+  }
+
+  .review-card {
+    flex: 0 0 80%;
+    max-width: 80%;
+    margin-right: 16px;
+    scroll-snap-align: start;
+    height: auto;
+    padding: 16px;
+  }
+
+  .reviews-carousel-container:hover .reviews-carousel-inner {
+    animation-play-state: paused;
+  }
+
+  @keyframes scrollReviews {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-1480px);
+    }
+  }
+}
+
