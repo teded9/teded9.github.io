@@ -517,44 +517,63 @@
       const carouselContainer = document.querySelector('.reviews-carousel-container');
       const carouselInner = document.querySelector('.reviews-carousel-inner');
 
-      // Function to toggle pause state
-      function toggleCarouselPause() {
-        if (carouselInner.classList.contains('paused')) {
-          carouselInner.classList.remove('paused');
-        } else {
-          carouselInner.classList.add('paused');
-        }
+      let isPausedByTap = false; // Flag to track if it was paused by a tap
+
+      // Function to pause the carousel
+      function pauseCarousel() {
+        carouselInner.classList.add('paused');
       }
 
-      // 1. Handle mouseenter/mouseleave for desktop
+      // Function to play the carousel
+      function playCarousel() {
+        carouselInner.classList.remove('paused');
+      }
+
+      // Handle mouseenter/mouseleave for desktop (true hover behavior)
       carouselContainer.addEventListener('mouseenter', function() {
-        carouselInner.classList.add('paused');
+        // Only pause on hover if not already paused by a tap
+        if (!isPausedByTap) {
+          pauseCarousel();
+        }
       });
 
       carouselContainer.addEventListener('mouseleave', function() {
-        carouselInner.classList.remove('paused');
-      });
-
-      // 2. Handle click/tap for mobile
-      // We use 'click' event which works for both mouse clicks and taps on touch devices.
-      // This will override the default :hover behavior on touch.
-      carouselContainer.addEventListener('click', function(event) {
-        // Prevent event from propagating if you click inside a review card,
-        // but still allow the carousel to pause/play
-        if (event.target.closest('.review-card')) {
-          event.stopPropagation(); // Stop click from affecting parent container if clicking on review card
+        // Only resume on mouse leave if not paused by a tap
+        if (!isPausedByTap) {
+          playCarousel();
         }
-        toggleCarouselPause();
       });
 
-      // To handle the issue where a tap *outside* the carousel might be needed
-      // to resume on mobile if it was paused by a tap, we can add a listener
-      // to the document.body.
+      // Handle click/tap events for both desktop and mobile
+      carouselContainer.addEventListener('click', function(event) {
+        // Check if the device supports touch (a common heuristic)
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+
+        if (isTouchDevice) {
+          // On touch devices:
+          // If already paused by a tap, and we tap inside again, keep it paused.
+          // If not paused, or paused by hover, then a tap pauses it and sets the flag.
+          if (carouselInner.classList.contains('paused') && isPausedByTap) {
+            // It's already paused by a tap, so a tap inside does nothing (keeps it paused)
+            return;
+          } else {
+            // Pause it and set the flag that it was paused by a tap
+            pauseCarousel();
+            isPausedByTap = true;
+          }
+        }
+        // For non-touch devices (desktop clicks) or if it's already paused by tap and we tap inside:
+        // do nothing here, mouseenter/mouseleave handles it.
+        // The desktop click on the carousel won't pause it, only hover will.
+      });
+
+      // Global click listener to detect clicks outside the carousel (for mobile un-pause)
       document.body.addEventListener('click', function(event) {
-        // If the click is *not* inside the carousel and the carousel is paused,
-        // then unpause it. This helps if a user taps a card, then taps elsewhere.
-        if (!carouselContainer.contains(event.target) && carouselInner.classList.contains('paused')) {
-          carouselInner.classList.remove('paused');
+        // If the click is *not* inside the carousel and the carousel is currently paused
+        // AND it was paused by a tap, then unpause it.
+        if (!carouselContainer.contains(event.target) && carouselInner.classList.contains('paused') && isPausedByTap) {
+          playCarousel();
+          isPausedByTap = false; // Reset the flag
         }
       });
     });
