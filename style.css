@@ -112,7 +112,7 @@ nav {
 .hero::before {
     content: '';
     position: absolute;
-    inset: 0; /* Shorthand for top, left, right, bottom */
+    inset: 0;
     background: radial-gradient(circle at 30% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 70% 30%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
     animation: float 20s ease-in-out infinite;
@@ -162,7 +162,7 @@ nav {
 }
 
 .cta-button:hover {
-    transform: translateY(-2px) scale(1.05); /* Combined transform */
+    transform: translateY(-2px) scale(1.05);
     box-shadow: 0 12px 48px rgba(16, 185, 129, 0.4);
 }
 
@@ -196,7 +196,7 @@ nav {
     padding: 40px;
     transition: all 0.4s ease;
     position: relative;
-    overflow: hidden; /* Re-added overflow for product cards for consistency */
+    overflow: hidden;
 }
 
 .product-card::before,
@@ -327,35 +327,33 @@ footer {
     margin-bottom: 8px;
 }
 
-/* Reviews Section */
+/* Reviews Section - Updated */
 .reviews-carousel-container {
-    overflow: hidden;
     width: 100%;
     padding: 20px 0;
+    overflow-x: hidden;
 }
 
 .reviews-carousel-inner {
     display: flex;
-    position: relative;
-    left: 0;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
 }
 
 .review-card {
-    flex-shrink: 0;
-    width: clamp(300px, 80vw, 450px);
-    margin-right: 40px;
-    padding: 30px;
-    text-align: left;
+    flex: 0 1 calc(33.333% - 24px);
+    max-width: calc(33.333% - 24px);
+    background: #000;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
     display: flex;
     flex-direction: column;
-    min-height: 180px;
     justify-content: space-between;
-}
-
-.review-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--light-green);
-    box-shadow: 0 15px 45px rgba(16, 185, 129, 0.15);
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
 }
 
 .review-header {
@@ -399,14 +397,8 @@ footer {
 
 /* Animations */
 @keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes float {
@@ -415,6 +407,13 @@ footer {
 }
 
 /* Mobile Responsiveness */
+@media (max-width: 1024px) {
+    .review-card {
+        flex: 0 1 calc(50% - 24px);
+        max-width: calc(50% - 24px);
+    }
+}
+
 @media (max-width: 768px) {
     .nav-links {
         display: none;
@@ -442,6 +441,21 @@ footer {
     .container {
         padding: 0 16px;
     }
+
+    .reviews-carousel-inner {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 16px;
+    }
+
+    .review-card {
+        flex: 0 0 80%;
+        max-width: 80%;
+        scroll-snap-align: start;
+        margin-right: 16px;
+    }
 }
 
 /* Custom Scrollbar Styling */
@@ -461,84 +475,3 @@ footer {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--neon-green);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* fucking */
-
-.reviews-carousel-container {
-  overflow-x: auto;
-  width: 100%;
-  background: transparent;
-  padding: 20px 0;
-  height: auto;
-}
-
-.reviews-carousel-inner {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  animation: none;
-  position: static;
-  width: 100%;
-}
-
-.review-card {
-  flex: 1 1 300px;
-  max-width: 350px;
-  background: #000;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  border: 1px solid #333;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: border 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-/* Mobile-specific behavior: horizontal scroll carousel */
-@media (max-width: 768px) {
-  .reviews-carousel-inner {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    animation: scrollReviews 20s linear infinite;
-    width: max-content;
-  }
-
-  .review-card {
-    flex: 0 0 80%;
-    max-width: 80%;
-    margin-right: 16px;
-    scroll-snap-align: start;
-    height: auto;
-    padding: 16px;
-  }
-
-  .reviews-carousel-container:hover .reviews-carousel-inner {
-    animation-play-state: paused;
-  }
-
-  @keyframes scrollReviews {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-1480px);
-    }
-  }
-}
-
