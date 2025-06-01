@@ -78,8 +78,7 @@
       height: 320px;
       will-change: transform;
       animation: scrollReviewsRightToLeft 20s linear infinite;
-      /* Adjusted width calculation for responsive cards */
-      width: max-content; /* This is crucial for allowing the content to extend beyond the viewport */
+      width: max-content; /* Allows all review cards to be in one line */
     }
 
     /* Keyframes for RIGHT-TO-LEFT scroll */
@@ -88,30 +87,17 @@
         transform: translateX(0); /* Start with no translation */
       }
       100% {
-        /*
-          Adjust this value carefully. It should be the negative of the width of one full set of *original* review cards.
-          For responsive cards, calculating an exact pixel value is tricky, so we'll often rely on JavaScript
-          for more precise infinite carousels, or ensure enough duplicates are present so the loop appears seamless.
-          For now, keeping the original value but be aware it might need fine-tuning if the number of visible
-          cards changes significantly on mobile.
-          Let's assume roughly 4 cards for the calculation (4 * (350px width + 20px margin) = 1480px).
-          If cards become much smaller on mobile, this value might cause an abrupt jump.
-          A more robust solution for perfectly seamless responsive carousels involves JavaScript
-          to dynamically calculate the `transform` value.
-        */
         transform: translateX(-1480px); /* 4 * 370px (card + margin) = 1480px */
       }
     }
 
-
-    /* PAUSE animation on hover/tap */
-    .reviews-carousel-container:hover .reviews-carousel-inner {
+    /* NEW CSS CLASS FOR PAUSING - controlled by JavaScript */
+    .reviews-carousel-inner.paused {
       animation-play-state: paused;
     }
 
     .review-card {
       /* Ensure consistent width across all devices */
-      /* Changed from fixed 350px to a fluid width */
       flex: 0 0 85vw; /* Start with a large viewport width, e.g., 85% of viewport width */
       max-width: 350px; /* But don't let it get larger than 350px on wider screens */
       min-width: 280px; /* Don't let it get too small on very narrow screens */
@@ -136,18 +122,13 @@
         margin-right: 15px; /* Slightly reduce margin */
         min-width: 250px; /* Adjust min-width if needed */
       }
-      /* You might need to adjust the animation keyframe value slightly here too
-         if the visual jump is noticeable due to card width changes.
-         However, for CSS-only infinite carousels, this is often a compromise. */
       @keyframes scrollReviewsRightToLeft {
         0% {
           transform: translateX(0);
         }
         100% {
-          /* This will likely need manual adjustment based on actual mobile card widths
-             to ensure a smooth loop point. If cards are 250px + 15px margin = 265px,
-             then for 4 cards, it would be -1060px. */
-          transform: translateX(-1060px); /* Example for 4 mobile cards */
+          /* Adjust based on your testing for mobile card widths */
+          transform: translateX(-1060px);
         }
       }
     }
@@ -290,7 +271,7 @@
       <div class="about-content">
         <div class="about-text">
           <p>
-          At Beyond Cannibal, we are pioneers in synthetic human needs,
+            At Beyond Cannibal, we are pioneers in synthetic human needs,
             dedicated to revolutionizing culinary experiences. We specialize in
             crafting high-quality synthetic human meat, meticulously developed
             for human consumption. Our innovative approach combines
@@ -531,5 +512,52 @@
     </div>
   </footer>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const carouselContainer = document.querySelector('.reviews-carousel-container');
+      const carouselInner = document.querySelector('.reviews-carousel-inner');
+
+      // Function to toggle pause state
+      function toggleCarouselPause() {
+        if (carouselInner.classList.contains('paused')) {
+          carouselInner.classList.remove('paused');
+        } else {
+          carouselInner.classList.add('paused');
+        }
+      }
+
+      // 1. Handle mouseenter/mouseleave for desktop
+      carouselContainer.addEventListener('mouseenter', function() {
+        carouselInner.classList.add('paused');
+      });
+
+      carouselContainer.addEventListener('mouseleave', function() {
+        carouselInner.classList.remove('paused');
+      });
+
+      // 2. Handle click/tap for mobile
+      // We use 'click' event which works for both mouse clicks and taps on touch devices.
+      // This will override the default :hover behavior on touch.
+      carouselContainer.addEventListener('click', function(event) {
+        // Prevent event from propagating if you click inside a review card,
+        // but still allow the carousel to pause/play
+        if (event.target.closest('.review-card')) {
+          event.stopPropagation(); // Stop click from affecting parent container if clicking on review card
+        }
+        toggleCarouselPause();
+      });
+
+      // To handle the issue where a tap *outside* the carousel might be needed
+      // to resume on mobile if it was paused by a tap, we can add a listener
+      // to the document.body.
+      document.body.addEventListener('click', function(event) {
+        // If the click is *not* inside the carousel and the carousel is paused,
+        // then unpause it. This helps if a user taps a card, then taps elsewhere.
+        if (!carouselContainer.contains(event.target) && carouselInner.classList.contains('paused')) {
+          carouselInner.classList.remove('paused');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
