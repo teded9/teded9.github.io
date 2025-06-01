@@ -1,496 +1,650 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beyond cannibal</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://Beyondcannibal.com/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles (Desktop First) */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Dark background from user's style */
+            color: #e5e7eb; /* Light gray default text color from user's style */
+            line-height: 1.6;
+        }
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Beyond cannibal</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="stylesheet" href="https://Beyondcannibal.com/style.css" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    /* CSS for the top navigation logo */
-    .nav-logo {
-      width: 200px;
-      height: auto;
-      margin-right: 15px;
-      vertical-align: middle;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    /* CSS for the hero logo to make it look good */
-    .hero-logo {
-      width: 400px;
-      height: auto;
-      max-width: 90%;
-    }
+        /* Header Styles */
+        header {
+            background-color: #000000; /* Black header background from user's style */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            padding: 10px 0; /* Adjusted from user's 20px to maintain consistent spacing */
+        }
 
-    header nav.container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 20px;
-    }
+        header nav.container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px; /* Adjusted from user's 20px to maintain consistent spacing */
+        }
 
-    .nav-links {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-    }
+        .nav-logo {
+            width: 200px;
+            height: auto;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
 
-    .nav-links li {
-      margin-left: 20px;
-    }
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
 
-    .nav-links li a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 600;
-    }
+        .nav-links li {
+            margin-left: 20px;
+        }
 
-    /* Product Image Responsiveness */
-    .product-image {
-      max-width: 100%;
-      /* Ensures the image scales down */
-      height: auto;
-      border-radius: 8px;
-      margin-bottom: 16px;
-    }
+        .nav-links li a {
+            text-decoration: none;
+            color: #ffffff; /* White nav link color for visibility on dark background */
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
 
-    /* Reviews Carousel Styles */
-    .reviews-carousel-container {
-      overflow: hidden; /* This hides the scrollbar */
-      width: 100%;
-      position: relative;
-      background: transparent;
-      padding: 20px 0;
-      height: 360px;
-    }
+        .nav-links li a:hover {
+            color: #48CCAD; /* Teal color on hover */
+        }
 
-    .reviews-carousel-inner {
-      display: flex;
-      position: absolute;
-      top: 20px;
-      left: 0; /* Original content starts at the left edge for right-to-left scroll */
-      height: 320px;
-      will-change: transform;
-      animation: scrollReviewsRightToLeft 20s linear infinite;
-      width: max-content; /* Allows all review cards to be in one line */
-    }
+        /* Hero Section Styles */
+        .hero {
+            background-color: #1a1a1a; /* Dark background from user's style */
+            color: #fff;
+            text-align: center;
+            padding: 80px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+        }
 
-    /* Keyframes for RIGHT-TO-LEFT scroll */
-    @keyframes scrollReviewsRightToLeft {
-      0% {
-        transform: translateX(0); /* Start with no translation */
-      }
-      100% {
-        /* Move LEFT by the total width of one set of original reviews (4 cards * (350px width + 20px margin)) */
-        transform: translateX(-1480px); /* 4 * 370px = 1480px */
-      }
-    }
+        .hero-content {
+            max-width: 800px;
+        }
 
-    /* PAUSE animation on hover/tap */
-    .reviews-carousel-container:hover .reviews-carousel-inner {
-      animation-play-state: paused;
-    }
+        .hero-logo {
+            width: 400px;
+            height: auto;
+            max-width: 100%;
+            margin-bottom: 30px;
+        }
 
-    .review-card {
-      /* Ensure consistent width across all devices */
-      flex: 0 0 350px; /* Each card is 350px wide */
-      margin-right: 20px;
-      background: #000;
-      border-radius: 12px;
-      padding: 24px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      border: 1px solid #333;
-      height: 280px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: border 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
+        .hero p {
+            font-size: 1.5em; /* Maintained smaller text */
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
 
-    .review-card:hover {
-      border: 3px solid #48ccad;
-      box-shadow: 0 6px 12px rgba(72, 204, 173, 0.3);
-    }
+        .text-green {
+            color: #48CCAD; /* Teal color */
+        }
 
-    .review-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: #48CCAD;
+            color: #fff;
+            padding: 10px 20px; /* Maintained smaller button */
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9em; /* Maintained smaller button text */
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
 
-    .reviewer-name {
-      font-weight: 600;
-      color: #fff;
-      font-size: 18px;
-    }
+        .cta-button:hover {
+            background-color: #3aa68b;
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+        }
 
-    .stars {
-      display: flex;
-      gap: 2px;
-    }
+        .cta-button svg {
+            margin-left: 6px;
+            width: 16px;
+            height: 16px;
+        }
 
-    .star-icon {
-      width: 20px;
-      height: 20px;
-      fill: #fbbf24;
-      stroke: none;
-    }
+        /* Section General Styles */
+        .section {
+            padding: 60px 0;
+            text-align: center;
+        }
 
-    .star-icon.empty {
-      fill: #666;
-    }
+        .section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #ffffff; /* White section headings from user's style */
+        }
 
-    .review-text {
-      color: #e5e7eb;
-      line-height: 1.6;
-      font-size: 18px;
-      margin: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  </style>
+        /* Products Section Styles */
+        #products {
+            background-color: #1a1a1a; /* Dark background from user's style */
+        }
+
+        .products-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: #000000; /* Black product card background from user's style */
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            flex: 0 0 calc(33.333% - 20px);
+            max-width: 350px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .product-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #ffffff; /* White product card heading from user's style */
+            text-align: center;
+        }
+
+        .product-card p {
+            font-size: 1em;
+            color: #e5e7eb; /* Light gray product card text from user's style */
+            text-align: center;
+        }
+
+        /* About Us Section Styles */
+        #about {
+            background-color: #1a1a1a; /* Dark background from user's style */
+            color: #e5e7eb; /* Light gray text color from user's style */
+        }
+
+        #about h2 {
+            color: #fff; /* White heading from user's style */
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            text-align: left;
+        }
+
+        .about-text {
+            flex: 1;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            flex: 1;
+            max-width: 500px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow from user's style */
+        }
+
+        /* Reviews Carousel Styles (Desktop) */
+        .reviews-carousel-container {
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+            background: transparent;
+            padding: 20px 0;
+            height: 360px;
+        }
+
+        .reviews-carousel-inner {
+            display: flex;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 320px;
+            will-change: transform;
+            animation: scrollReviews 20s linear infinite;
+            width: max-content;
+        }
+
+        @keyframes scrollReviews {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-1480px); /* 4 * (350px + 20px) */ }
+        }
+
+        .reviews-carousel-container:hover .reviews-carousel-inner {
+            animation-play-state: paused;
+        }
+
+        .review-card {
+            flex: 0 0 350px;
+            margin-right: 20px;
+            background: #000000; /* Black background from user's style */
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333333; /* Dark border from user's style */
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .review-card:hover {
+            border: 3px solid #48CCAD;
+            box-shadow: 0 6px 12px rgba(72, 204, 173, 0.3);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #ffffff; /* White text from user's style */
+            font-size: 18px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star-icon {
+            width: 20px;
+            height: 20px;
+            fill: #fbbf24;
+            stroke: none;
+        }
+
+        .star-icon.empty {
+            fill: #666666; /* Dark gray for empty stars from user's style */
+        }
+
+        .review-text {
+            color: #e5e7eb; /* Light gray text from user's style */
+            line-height: 1.6;
+            font-size: 18px;
+            margin: 0;
+            white-space: normal; /* Ensure text wraps */
+            overflow: visible; /* Ensure text is not cut off */
+            text-overflow: clip; /* Ensure text is not cut off */
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #333; /* Dark gray footer background from user's style */
+            color: #fff; /* White text from user's style */
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        footer h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #fff; /* White heading from user's style */
+        }
+
+        footer p {
+            font-size: 0.9em;
+            color: #ccc; /* Light gray text from user's style */
+        }
+
+        /* Mobile Optimizations (max-width: 768px) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            /* Header */
+            .nav-logo {
+                width: 150px;
+            }
+
+            .nav-links {
+                display: none; /* Hide nav links on mobile */
+            }
+
+            /* Hero Section */
+            .hero {
+                padding: 60px 15px;
+                min-height: 400px;
+            }
+
+            .hero-logo {
+                width: 300px;
+                margin-bottom: 20px;
+            }
+
+            .hero p {
+                font-size: 1.1em; /* Further reduced for mobile */
+                margin-bottom: 15px;
+            }
+
+            .cta-button {
+                padding: 8px 16px; /* Further reduced for mobile */
+                font-size: 0.8em; /* Further reduced for mobile */
+            }
+
+            /* Products Section */
+            .products-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .product-card {
+                flex: 0 0 90%;
+                max-width: 400px;
+                padding: 20px;
+            }
+
+            .product-card h3 {
+                font-size: 1.3em;
+            }
+
+            .product-card p {
+                font-size: 0.95em;
+            }
+
+            /* About Us Section */
+            .about-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .about-image {
+                max-width: 90%;
+            }
+
+            .about-text {
+                font-size: 1em;
+            }
+
+            /* Reviews Carousel (Mobile Specific - Horizontal Scroll with Snap) */
+            .reviews-carousel-container {
+                padding: 20px 10px;
+                height: auto; /* Allow height to adjust based on content */
+                overflow-x: scroll; /* Enable horizontal scrolling */
+                scroll-snap-type: x mandatory; /* Enable scroll snapping */
+                -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            }
+            .reviews-carousel-inner {
+                position: static; /* Remove absolute positioning */
+                display: flex;
+                width: auto; /* Allow width to be determined by content */
+                animation: none; /* Disable auto-scrolling animation */
+                padding-bottom: 10px; /* Add some padding for scrollbar */
+            }
+            .review-card {
+                flex: 0 0 80%; /* Take up 80% of the container width */
+                max-width: 80%; /* Max width for individual cards */
+                margin-right: 16px;
+                padding: 16px;
+                height: auto; /* Allow height to adjust based on content */
+                scroll-snap-align: start; /* Snap to the start of each card */
+            }
+            
+            .review-card:hover {
+                border: 2px solid #48CCAD;
+                box-shadow: 0 4px 8px rgba(72, 204, 173, 0.3);
+            }
+            .review-text {
+                font-size: 16px;
+                white-space: normal;
+                overflow: visible;
+                text-overflow: clip;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <nav class="container">
-      <a href="/" class="logo-link">
-        <img
-          src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp"
-          alt="Beyond Cannibal Logo"
-          class="nav-logo"
-        />
-      </a>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#products">Products</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#reviews">Reviews</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+        <nav class="container">
+            <a href="/" class="logo-link">
+                <img src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp" alt="Beyond Cannibal Logo" class="nav-logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <img
-        src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp"
-        alt="Beyond Cannibal Logo"
-        class="hero-logo"
-      />
-      <p>
-        Unethically Sourced. Scientifically Perfected.
-        <span class="text-green">Uniquely Human.</span>
-      </p>
-      <a href="#products" class="cta-button">
-        Discover Products
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path d="M7 17L17 7M17 7H7M17 7V17" />
-        </svg>
-      </a>
-    </div>
-  </section>
-
-  <section id="products" class="section">
-    <div class="container">
-      <h2>Our Products</h2>
-      <div class="products-grid">
-        <div class="product-card">
-          <img src="p1e2.webp" alt="Lab-Grown Beef" class="product-image" />
-          <h3>Beyond cannibal™ Shredded Cultured Steak</h3>
-          <p>
-            Shredded strands of lab-grown, human-inspired steak. Cultivated
-            with harm, engineered for realism. Ethically synthetic. Unsettlingly
-            authentic.
-          </p>
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp" alt="Beyond Cannibal Logo" class="hero-logo">
+            <p>Unethically Sourced. Scientifically Perfected. <span class="text-green">Uniquely Human.</span></p>
+            <a href="#products" class="cta-button">
+                Discover Products
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M7 17L17 7M17 7H7M17 7V17"/>
+                </svg>
+            </a>
         </div>
-        <div class="product-card">
-          <img
-            src="https://beyondcannibal.com/p2b.webp"
-            alt="ground people"
-            class="product-image"
-          />
-          <h3>Beyond cannibal™ plant based ground </h3>
-          <p>
-            A biologically convincing, plant-based meat analog formulated to
-            replicate the taste and texture of human flesh. Not ethically
-            sourced. Not morally justified. Just disturbingly real.
-          </p>
+    </section>
+
+    <section id="products" class="section">
+        <div class="container">
+            <h2>Our Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="p1e2.webp" alt="Lab-Grown Beef" class="product-image">
+                    <h3>Beyond cannibal™ Shredded Cultured Steak</h3>
+                    <p>Shredded strands of lab-grown, human-inspired steak. Cultivated with harm, engineered for realism. Ethically synthetic. Unsettlingly authentic.</p>
+                </div>
+                <div class="product-card">
+                    <img src="https://beyondcannibal.com/p2b.webp" alt="ground people" class="product-image">
+                    <h3>Beyond cannibal™ plant based ground </h3>
+                    <p> A biologically convincing, plant-based meat analog formulated to replicate the taste and texture of human flesh. Not ethically sourced. Not morally justified. Just disturbingly real.</p>
+                </div>
+                <div class="product-card">
+                    <img src="p3b.webp" alt="Lab-Grown Pork" class="product-image">
+                    <h3>Beyond Cannibal™ human sausages </h3>
+                    <p>Cultivated human meat, artfully rendered into classic sausage form. Profoundly real, ethically ambiguous. Each link, infused with avocado oil, delivers that distinctive savor of human nose grease. Experience unsettling authenticity..</p>
+                </div>
+            </div>
+            </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About Us</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>At Beyond Cannibal, we are pioneers in synthetic human needs, dedicated to revolutionizing culinary experiences. We specialize in crafting high-quality synthetic human meat, meticulously developed for human consumption. Our innovative approach combines cutting-edge science with a commitment to fulfilling unique dietary preferences, offering a truly distinctive and ethically ambiguous alternative.</p>
+                </div>
+                <img src="Aboutus.webp" alt="just a funny picture I guess lmao" class="about-image">
+            </div>
         </div>
-        <div class="product-card">
-          <img src="p3b.webp" alt="Lab-Grown Pork" class="product-image" />
-          <h3>Beyond Cannibal™ human sausages </h3>
-          <p>
-            Cultivated human meat, artfully rendered into classic sausage form.
-            Profoundly real, ethically ambiguous. Each link, infused with
-            avocado oil, delivers that distinctive savor of human nose grease.
-            Experience unsettling authenticity..
-          </p>
+    </section>
+
+    <section id="reviews" class="section">
+        <div class="container">
+            <h2>Customer Reviews</h2>
+            <div class="reviews-carousel-container">
+                <div class="reviews-carousel-inner" id="reviewsCarouselInner">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Jeffrey Dahmer</span>
+                            <div class="stars">
+                                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">"I wish I knew about Beyond Cannibal before I died. The ethical sourcing and scientific perfection would have made my life so much easier. Five stars!"</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer-name">Armin Meiwes</span>
+                        <div class="stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">"Absolutely love this product! The taste is incredibly authentic, and knowing it's sustainably sourced makes it even better. Five stars!"</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer-name">Issei Sagawa</span>
+                        <div class="stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer-name">Albert Fish</span>
+                        <div class="stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer-name">Jeffrey Dahmer</span>
+                        <div class="stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">"I wish I knew about Beyond Cannibal before I died. The ethical sourcing and scientific perfection would have made my life so much easier. Five stars!"</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer-name">Armin Meiwes</span>
+                        <div class="stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">"Absolutely love this product! The taste is incredibly authentic, and knowing it's sustainably sourced makes it even better. Five stars!"</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer-name">Issei Sagawa</span>
+                        <div class="stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="reviewer-name">Albert Fish</span>
+                        <div class="stars">
+                            <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                            <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
+                        </div>
+                    </div>
+                    <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
-
-  <section id="about" class="section">
-    <div class="container">
-      <h2>About Us</h2>
-      <div class="about-content">
-        <div class="about-text">
-          <p>
-            At Beyond Cannibal, we are pioneers in synthetic human needs,
-            dedicated to revolutionizing culinary experiences. We specialize in
-            crafting high-quality synthetic human meat, meticulously developed
-            for human consumption. Our innovative approach combines
-            cutting-edge science with a commitment to fulfilling unique dietary
-            preferences, offering a truly distinctive and ethically ambiguous
-            alternative.
-          </p>
+</section>
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <img src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp" alt="Beyond Cannibal Logo" class="footer-logo">
+                <h3>Beyond Cannibal</h3>
+                <p>Contact: Josh@JoshRyan.fyi</p>
+                <p>Phone: 1-800-BEYOND-1</p>
+                <p>Beyond cannibal © 2025 by Josh Ryan is licensed under CC BY-SA 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by-sa/4.0/</p>
+            </div>
         </div>
-        <img
-          src="Aboutus.webp"
-          alt="just a funny picture I guess lmao"
-          class="about-image"
-        />
-      </div>
-    </div>
-  </section>
-
-  <section id="reviews" class="section">
-    <div class="container">
-      <h2>Customer Reviews</h2>
-      <div class="reviews-carousel-container">
-        <div class="reviews-carousel-inner" id="reviewsCarouselInner">
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name">Jeffrey Dahmer</span>
-              <div class="stars">
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-              </div>
-            </div>
-            <p class="review-text">
-              "I wish I knew about Beyond Cannibal before I died. The ethical
-              sourcing and scientific perfection would have made my life so much
-              easier. Five stars!"
-            </p>
-          </div>
-
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name">Armin Meiwes</span>
-              <div class="stars">
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-              </div>
-            </div>
-            <p class="review-text">"Absolutely love this product! The taste is incredibly
-              authentic, and knowing it's sustainably sourced makes it even
-              better. Five stars!"</p>
-          </div>
-
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name">Issei Sagawa</span>
-              <div class="stars">
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-              </div>
-            </div>
-            <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
-          </div>
-
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name">Albert Fish</span>
-              <div class="stars">
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-              </div>
-            </div>
-            <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
-          </div>
-
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name">Jeffrey Dahmer</span>
-              <div class="stars">
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.5828
-                       8.332-1.151z"
-                  />
-                </svg>
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-                <svg class="star-icon" viewBox="0 0 24 24">
-                  <path
-                    d="M12 .587l3.668 7.568 8.332 1.151-6.064
-                       5.828 1.48 8.279L12 18.896l-7.416
-                       3.817 1.48-8.279-6.064-5.828
-                       8.332-1.151z"
-                  />
-                </svg>
-              </div>
-            </div>
-            <p class="review-text">
-              "I wish I knew about Beyond Cannibal before I died. The ethical
-              sourcing and scientific perfection would have made my life so much
-              easier. Five stars!"
-            </p>
-          </div>
-
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name">Armin Meiwes</span>
-              <div class="stars">
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-              </div>
-            </div>
-            <p class="review-text">"Absolutely love this product! The taste is incredibly
-              authentic, and knowing it's sustainably sourced makes it even
-              better. Five stars!"</p>
-          </div>
-
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name">Issei Sagawa</span>
-              <div class="stars">
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-              </div>
-            </div>
-            <p class="review-text">"Beyond Cannibal has revolutionized my culinary experience. The texture is spot on, and it's so versatile. Four stars!"</p>
-          </div>
-
-          <div class="review-card">
-            <div class="review-header">
-              <span class="reviewer-name">Albert Fish</span>
-              <div class="stars">
-                <svg class="star-icon" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-                <svg class="star-icon empty" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 18.896l-7.416 3.817 1.48-8.279-6.064-5.828 8.332-1.151z"/></svg>
-              </div>
-            </div>
-            <p class="review-text">"Disgusting! This 'fake human meat' is an insult to traditional cannibalism. There's no substitute for the real thing!"</p>
-          </div>
-          </div>
-      </div>
-    </div>
-  </section>
-
-  <footer id="contact">
-    <div class="container">
-      <div class="footer-content">
-        <img
-          src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp"
-          alt="Beyond Cannibal Logo"
-          class="footer-logo"
-        />
-        <h3>Beyond Cannibal</h3>
-        <p>Contact: Josh@JoshRyan.fyi</p>
-        <p>Phone: 1-800-BEYOND-1</p>
-        <p>
-          Beyond cannibal © 2025 by Josh Ryan is licensed under CC BY-SA 4.0.
-          To view a copy, visit
-          https://creativecommons.org/licenses/by-sa/4.0/
-        </p>
-      </div>
-    </div>
-  </footer>
-
+    </footer>
+    
+    <script src="https://www.beyondcannibal.com/script.js"></script>
 </body>
 </html>
