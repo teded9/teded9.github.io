@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <h1 class="title">Hello World! </h1>
+      <p id="currentTime"></p>
+      <script src="script.js"></script>
+  </body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gesture Music Controller - Band Edition</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MediaPipe Hands library -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.min.js"></script>
+    <!-- MediaPipe Camera Utils (for easy webcam setup) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675469240/camera_utils.js"></script>
+    <!-- MediaPipe Drawing Utils (for drawing landmarks) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1675469240/drawing_utils.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font */
+            background-color: #f0f4f8; /* Light background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem; /* Spacing between elements */
+        }
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            border-radius: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            overflow: hidden; /* Ensure rounded corners apply */
+            background-color: #000;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            display: block; /* Remove extra space below video */
+            transform: scaleX(-1); /* Mirror the video for natural interaction */
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: scaleX(-1); /* Mirror canvas to match video */
+        }
+        button {
+            transition: all 0.2s ease-in-out;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .instrument-control-zone {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 25%; /* Each zone takes 25% height */
+            /* Background colors moved to inline styles for clear distinction */
+            pointer-events: none; /* Allows mouse events to pass through to video/canvas */
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.3s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-size: 1.5rem;
+            border-radius: 1rem; /* Match video border radius */
+        }
+        .instrument-control-zone.active {
+            opacity: 0.7; /* Visible when a hand is in the zone */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="container">
+        <h1 class="text-4xl font-extrabold text-gray-800 mb-4">Band Gesture Controller</h1>
+        <p class="text-lg text-gray-600 mb-6">
+            Use your hand gestures over the webcam feed to control the band's sound:
+        </p>
+        <ul class="list-disc list-inside text-left text-gray-700 mb-6 space-y-2">
+            <li><strong class="text-blue-600">Horizontal hand movement (left/right):</strong> Controls <span class="font-bold">overall master volume</span>.</li>
+            <li><strong class="text-blue-600">Vertical hand movement (up/down) within a colored zone:</strong> Controls the volume of the <span class="font-bold">simulated instrument</span> in that zone.</li>
+            <li><strong class="text-blue-600">Make a "fist" gesture:</strong> Toggles music play/pause.</li>
+        </ul>
+        <p class="text-sm text-gray-500 mb-6 italic">
+            Note: This application simulates instrument control from a single audio track. Real instrument separation from a live band performance is complex and beyond the scope of this demo.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+            <button id="startWebcam" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Start Webcam (Your Band Vid)
+            </button>
+            <button id="stopWebcam" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                Stop Webcam
+            </button>
+            <button id="toggleMusic" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                Play Music
+            </button>
+        </div>
+
+        <div class="video-container">
+            <video id="webcamVideo" autoplay muted playsinline></video>
+            <canvas id="gestureCanvas" class="output_canvas"></canvas>
+            <!-- Instrument control zones for visual feedback -->
+            <div id="drumsZone" class="instrument-control-zone" style="top: 0%; background: rgba(255, 99, 71, 0.2);">Drums</div>
+            <div id="bassZone" class="instrument-control-zone" style="top: 25%; background: rgba(60, 179, 113, 0.2);">Bass</div>
+            <div id="guitarZone" class="instrument-control-zone" style="top: 50%; background: rgba(255, 215, 0, 0.2);">Guitar</div>
+            <div id="vocalsZone" class="instrument-control-zone" style="top: 75%; background: rgba(138, 43, 226, 0.2);">Vocals</div>
+        </div>
+
+        <div class="mt-6 w-full max-w-2xl text-left">
+            <p class="text-gray-700 text-lg mb-2">Current Status:</p>
+            <p id="statusMessage" class="text-gray-900 font-semibold text-xl">Waiting to start webcam...</p>
+            <p id="handDetectedStatus" class="text-gray-700 text-base">Hand Detection: No hand detected</p>
+            <p id="masterVolumeDisplay" class="text-gray-700 text-base">Master Volume: 50%</p>
+            <p id="playbackSpeedDisplay" class="text-gray-700 text-base">Playback Speed: 1.00x</p>
+            <div class="mt-4 border-t pt-4">
+                <p class="text-gray-700 text-lg mb-2">Instrument Volumes (Simulated):</p>
+                <p id="drumsVolumeDisplay" class="text-gray-700 text-base ml-4">Drums: 100%</p>
+                <p id="bassVolumeDisplay" class="text-gray-700 text-base ml-4">Bass: 100%</p>
+                <p id="guitarVolumeDisplay" class="text-gray-700 text-base ml-4">Guitar: 100%</p>
+                <p id="vocalsVolumeDisplay" class="text-gray-700 text-base ml-4">Vocals: 100%</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get references to HTML elements
+        const webcamVideo = document.getElementById('webcamVideo');
+        const gestureCanvas = document.getElementById('gestureCanvas');
+        const canvasCtx = gestureCanvas.getContext('2d');
+
+        const startWebcamButton = document.getElementById('startWebcam');
+        const stopWebcamButton = document.getElementById('stopWebcam');
+        const toggleMusicButton = document.getElementById('toggleMusic');
+        const statusMessage = document.getElementById('statusMessage');
+        const handDetectedStatus = document.getElementById('handDetectedStatus');
+        const masterVolumeDisplay = document.getElementById('masterVolumeDisplay');
+        const playbackSpeedDisplay = document.getElementById('playbackSpeedDisplay');
+
+        const drumsVolumeDisplay = document.getElementById('drumsVolumeDisplay');
+        const bassVolumeDisplay = document.getElementById('bassVolumeDisplay');
+        const guitarVolumeDisplay = document.getElementById('guitarVolumeDisplay');
+        const vocalsVolumeDisplay = document.getElementById('vocalsVolumeDisplay');
+
+        // Instrument zone elements and their names/initial states
+        const drumsZone = document.getElementById('drumsZone');
+        const bassZone = document.getElementById('bassZone');
+        const guitarZone = document.getElementById('guitarZone');
+        const vocalsZone = document.getElementById('vocalsZone');
+        const instrumentZones = [
+            { name: 'Drums', element: drumsZone, gainNode: null },
+            { name: 'Bass', element: bassZone, gainNode: null },
+            { name: 'Guitar', element: guitarZone, gainNode: null },
+            { name: 'Vocals', element: vocalsZone, gainNode: null }
+        ];
+
+        let stream = null; // To hold the webcam stream, though MediaPipe Camera manages it
+        let audioContext = null; // Web Audio API context
+        let audioSource = null; // Audio buffer source
+        let masterGainNode = null; // Master gain node for overall volume control
+        let audioPlaying = false; // Flag to track music state
+        let musicBuffer = null; // To store decoded audio buffer
+
+        let hands; // MediaPipe Hands instance
+        let camera; // MediaPipe Camera instance
+
+        let lastToggleTime = 0; // To prevent rapid toggling of play/pause
+        const TOGGLE_DEBOUNCE_TIME = 1000; // 1 second debounce
+
+        // Define the audio file URL (represents the full band sound)
+        const audioUrl = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'; // Example music file
+
+        /**
+         * Fetches and decodes the audio file.
+         */
+        async function loadMusic() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            try {
+                const response = await fetch(audioUrl);
+                const arrayBuffer = await response.arrayBuffer();
+                musicBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                statusMessage.textContent = 'Band sound loaded. Ready to play!';
+                toggleMusicButton.disabled = false;
+            } catch (error) {
+                statusMessage.textContent = `Error loading band sound: ${error.message}. Please try again later or check the URL.`;
+                console.error('Error loading music:', error);
+            }
+        }
+
+        /**
+         * Starts playing the music and sets up instrument gain nodes.
+         */
+        function startMusic() {
+            if (!musicBuffer) {
+                statusMessage.textContent = 'Band sound not loaded yet. Please wait.';
+                return;
+            }
+            if (audioPlaying) {
+                statusMessage.textContent = 'Band sound is already playing.';
+                return;
+            }
+
+            // Resume audio context to ensure it's active after a user gesture
+            if (audioContext.state === 'suspended') {
+                audioContext.resume().then(() => {
+                    console.log('AudioContext resumed successfully');
+                }).catch(e => {
+                    console.error('Error resuming AudioContext:', e);
+                });
+            }
+
+            audioSource = audioContext.createBufferSource();
+            audioSource.buffer = musicBuffer;
+
+            masterGainNode = audioContext.createGain();
+            masterGainNode.gain.value = 0.5;
+
+            instrumentZones.forEach(zone => {
+                zone.gainNode = audioContext.createGain();
+                zone.gainNode.gain.value = 1.0;
+                audioSource.connect(zone.gainNode);
+                zone.gainNode.connect(masterGainNode);
+            });
+
+            masterGainNode.connect(audioContext.destination);
+
+            audioSource.loop = true;
+            audioSource.start(0);
+
+            audioPlaying = true;
+            statusMessage.textContent = 'Band playing... Show your gestures!';
+            toggleMusicButton.textContent = 'Pause Music';
+            updateVolumeDisplays();
+        }
+
+        /**
+         * Stops the music and disconnects all audio nodes.
+         */
+        function stopMusic() {
+            if (!audioPlaying) {
+                statusMessage.textContent = 'Band sound is not playing.';
+                return;
+            }
+
+            if (audioSource) {
+                audioSource.stop();
+                audioSource.disconnect();
+                audioSource = null;
+            }
+
+            instrumentZones.forEach(zone => {
+                if (zone.gainNode) {
+                    zone.gainNode.disconnect();
+                    zone.gainNode = null;
+                }
+            });
+            if (masterGainNode) {
+                masterGainNode.disconnect();
+                masterGainNode = null;
+            }
+
+            audioPlaying = false;
+            statusMessage.textContent = 'Band paused.';
+            toggleMusicButton.textContent = 'Play Music';
+            updateVolumeDisplays();
+        }
+
+        /**
+         * Toggles the music play/pause state when the button is clicked.
+         */
+        toggleMusicButton.addEventListener('click', () => {
+            if (audioPlaying) {
+                stopMusic();
+            } else {
+                startMusic();
+            }
+        });
+
+        /**
+         * Initiates webcam access and MediaPipe Hands.
+         */
+        startWebcamButton.addEventListener('click', async () => {
+            statusMessage.textContent = 'Requesting webcam access and loading hand model...';
+            try {
+                // Initialize MediaPipe Hands
+                hands = new Hands({
+                    locateFile: (file) => {
+                        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/${file}`;
+                    }
+                });
+
+                // Configure MediaPipe Hands
+                hands.setOptions({
+                    maxNumHands: 1, // Only track one hand for simpler control
+                    minDetectionConfidence: 0.7,
+                    minTrackingConfidence: 0.5
+                });
+
+                // Set callback for when results are available
+                hands.onResults(onResults);
+
+                // Setup Camera
+                // The MediaPipe Camera utility handles getUserMedia and attaching the stream to the video element.
+                camera = new Camera(webcamVideo, {
+                    onFrame: async () => {
+                        // Send the video frame to the MediaPipe Hands model for processing
+                        await hands.send({ image: webcamVideo });
+                    },
+                    width: 640,
+                    height: 480
+                });
+
+                // Start the camera stream
+                await camera.start();
+
+                // Set canvas dimensions to match video AFTER video metadata has loaded
+                webcamVideo.addEventListener('loadedmetadata', () => {
+                    gestureCanvas.width = webcamVideo.videoWidth;
+                    gestureCanvas.height = webcamVideo.videoHeight;
+                    console.log(`Video dimensions: ${webcamVideo.videoWidth}x${webcamVideo.videoHeight}`);
+                    console.log(`Canvas dimensions set to: ${gestureCanvas.width}x${gestureCanvas.height}`);
+                });
+
+
+                statusMessage.textContent = 'Webcam (your band) started and hand detection active! Show your hand!';
+                // Load music once webcam is ready
+                if (!musicBuffer) {
+                    loadMusic();
+                }
+
+            } catch (error) {
+                statusMessage.textContent = `Error starting webcam/hand model: ${error.name} - ${error.message}. Please ensure camera access is granted.`;
+                console.error('Error accessing webcam or loading MediaPipe:', error);
+            }
+        });
+
+        /**
+         * Stops the webcam stream and MediaPipe processing.
+         */
+        stopWebcamButton.addEventListener('click', () => {
+            if (camera) {
+                camera.stop();
+                camera = null;
+            }
+            if (hands) {
+                hands.close();
+                hands = null;
+            }
+            // Clear video source and canvas
+            webcamVideo.srcObject = null;
+            canvasCtx.clearRect(0, 0, gestureCanvas.width, gestureCanvas.height);
+            
+            statusMessage.textContent = 'Webcam (your band) and hand detection stopped.';
+            handDetectedStatus.textContent = 'Hand Detection: Not active';
+            hideAllZones(); // Hide zones when webcam stops
+            updateVolumeDisplays();
+        });
+
+        /**
+         * Checks if a "fist" gesture is made.
+         * Simple heuristic: if the tips of fingers (index, middle, ring, pinky) are close to each other
+         * or close to the base of the palm.
+         * @param {Array<Object>} landmarks - Array of hand landmark objects.
+         * @returns {boolean} True if a fist is detected, false otherwise.
+         */
+        function isFistGesture(landmarks) {
+            if (!landmarks || landmarks.length === 0) return false;
+
+            // Landmark indices for finger tips and base of palm (knuckles)
+            const indexTip = landmarks[8]; // Index finger tip
+            const middleTip = landmarks[12]; // Middle finger tip
+            const ringTip = landmarks[16]; // Ring finger tip
+            const pinkyTip = landmarks[20]; // Pinky finger tip
+            const wrist = landmarks[0]; // Wrist
+            const indexKnuckle = landmarks[5];
+            const middleKnuckle = landmarks[9];
+            const ringKnuckle = landmarks[13];
+            const pinkyKnuckle = landmarks[17];
+
+            // Check if finger tips are significantly below their knuckles (curled)
+            const curledThreshold = 0.05; // Relative to image height
+            const indexCurled = indexTip.y > indexKnuckle.y + curledThreshold;
+            const middleCurled = middleTip.y > middleKnuckle.y + curledThreshold;
+            const ringCurled = ringTip.y > ringKnuckle.y + curledThreshold;
+            const pinkyCurled = pinkyTip.y > pinkyKnuckle.y + curledThreshold;
+
+            // Check proximity of finger tips to each other (e.g., thumb tip to pinky tip)
+            // Use index 4 (thumb tip) and index 20 (pinky tip)
+            const thumbTip = landmarks[4];
+            const distanceThumbPinky = Math.sqrt(
+                Math.pow(thumbTip.x - pinkyTip.x, 2) + Math.pow(thumbTip.y - pinkyTip.y, 2)
+            );
+            // Normalize distance by wrist to middle finger base distance to make it scale-independent
+            const handSpan = Math.sqrt(
+                Math.pow(wrist.x - landmarks[9].x, 2) + Math.pow(wrist.y - landmarks[9].y, 2)
+            );
+            const normalizedThumbPinkyDistance = distanceThumbPinky / handSpan;
+
+            const fistProximityThreshold = 0.8; // If distance is less than this, they're close
+
+            const isCurled = indexCurled && middleCurled && ringCurled && pinkyCurled;
+            const areTipsClose = normalizedThumbPinkyDistance < fistProximityThreshold;
+
+            // Log details for debugging:
+            // console.log(`Fingers Curled: I:${indexCurled}, M:${middleCurled}, R:${ringCurled}, P:${pinkyCurled}`);
+            // console.log(`Normalized Thumb-Pinky Distance: ${normalizedThumbPinkyDistance.toFixed(2)} (Threshold: ${fistProximityThreshold})`);
+            // console.log(`Is Fist: ${isCurled && areTipsClose}`);
+
+            return isCurled && areTipsClose;
+        }
+
+        /**
+         * MediaPipe onResults callback. Processes hand detection results.
+         * @param {Object} results - The results object from MediaPipe Hands.
+         */
+        function onResults(results) {
+            // Clear the canvas
+            canvasCtx.save();
+            canvasCtx.clearRect(0, 0, gestureCanvas.width, gestureCanvas.height);
+            // Draw the webcam feed image onto the canvas, ensuring it's mirrored
+            canvasCtx.drawImage(results.image, 0, 0, gestureCanvas.width, gestureCanvas.height);
+
+            if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+                handDetectedStatus.textContent = 'Hand Detection: Hand detected!';
+                const landmarks = results.multiHandLandmarks[0]; // Get landmarks for the first detected hand
+
+                // Draw landmarks on the canvas
+                drawConnectors(canvasCtx, landmarks, Hands.HAND_CONNECTIONS, { color: '#00FF00', lineWidth: 5 });
+                drawLandmarks(canvasCtx, landmarks, { color: '#FF0000', lineWidth: 2 });
+
+                // Use the root of the hand (e.g., wrist or base of palm) for gesture control
+                // Landmark 0 is the wrist, Landmark 9 is the base of the middle finger
+                const controlPoint = landmarks[9] || landmarks[0]; // Prefer base of middle finger if available
+
+                // Convert normalized landmarks to pixel coordinates relative to the video frame
+                // Note: MediaPipe landmarks are normalized (0 to 1), so multiply by dimensions
+                const handX = controlPoint.x * gestureCanvas.width;
+                const handY = controlPoint.y * gestureCanvas.height;
+
+                // 1. Control Master Volume (horizontal hand movement)
+                const normalizedX = handX / gestureCanvas.width;
+                if (audioPlaying && masterGainNode) {
+                    masterGainNode.gain.value = Math.max(0.05, Math.min(1.0, normalizedX * 1.2));
+                }
+
+                // 2. Control Individual Instrument Volumes (vertical hand movement within zones)
+                const videoHeight = gestureCanvas.height;
+                const zoneHeight = videoHeight / instrumentZones.length;
+                const currentZoneIndex = Math.floor(handY / zoneHeight);
+
+                if (currentZoneIndex >= 0 && currentZoneIndex < instrumentZones.length) {
+                    const activeZone = instrumentZones[currentZoneIndex];
+
+                    // Calculate normalized Y within the active zone (0 to 1)
+                    const yInZone = handY - (currentZoneIndex * zoneHeight);
+                    const normalizedYInZone = 1 - (yInZone / zoneHeight); // Invert Y for intuitive up-is-more-volume
+
+                    if (audioPlaying && activeZone.gainNode) {
+                        activeZone.gainNode.gain.value = Math.max(0, Math.min(1.5, normalizedYInZone * 1.5));
+                    }
+
+                    // Highlight the active zone
+                    instrumentZones.forEach((zone, index) => {
+                        if (index === currentZoneIndex) {
+                            zone.element.classList.add('active');
+                        } else {
+                            zone.element.classList.remove('active');
+                        }
+                    });
+                } else {
+                    hideAllZones(); // Hide zones if hand is outside recognized areas
+                }
+
+                // 3. Play/Pause Toggle (Fist Gesture)
+                const currentTime = Date.now();
+                if (isFistGesture(landmarks)) {
+                    if (currentTime - lastToggleTime > TOGGLE_DEBOUNCE_TIME) {
+                        toggleMusicButton.click(); // Trigger the existing toggle music button handler
+                        lastToggleTime = currentTime;
+                    }
+                }
+
+                updateVolumeDisplays();
+
+            } else {
+                // No hand detected
+                handDetectedStatus.textContent = 'Hand Detection: No hand detected';
+                hideAllZones(); // Hide zones when no hand is present
+            }
+
+            canvasCtx.restore();
+        }
+
+        /**
+         * Updates all volume and speed display elements in the UI.
+         */
+        function updateVolumeDisplays() {
+            if (audioPlaying && masterGainNode && audioSource) {
+                masterVolumeDisplay.textContent = `Master Volume: ${Math.round(masterGainNode.gain.value * 100)}%`;
+                playbackSpeedDisplay.textContent = `Playback Speed: ${audioSource.playbackRate.value.toFixed(2)}x`;
+
+                instrumentZones.forEach(zone => {
+                    if (zone.gainNode) {
+                        document.getElementById(`${zone.name.toLowerCase()}VolumeDisplay`).textContent = `${zone.name}: ${Math.round(zone.gainNode.gain.value * 100)}%`;
+                    }
+                });
+            } else {
+                masterVolumeDisplay.textContent = `Master Volume: 50%`;
+                playbackSpeedDisplay.textContent = `Playback Speed: 1.00x`;
+                drumsVolumeDisplay.textContent = `Drums: 100%`;
+                bassVolumeDisplay.textContent = `Bass: 100%`;
+                guitarVolumeDisplay.textContent = `Guitar: 100%`;
+                vocalsVolumeDisplay.textContent = `Vocals: 100%`;
+            }
+        }
+
+        // Initial setup on page load
+        statusMessage.textContent = 'Click "Start Webcam (Your Band Vid)" to begin and load sound and hand detection.';
+        toggleMusicButton.disabled = true; // Disable until music is loaded or webcam starts
+        updateVolumeDisplays(); // Set initial display values
+    </script>
+</body>
+</html>
