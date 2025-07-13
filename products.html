@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beyond Cannibal - Our Products</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="https://Beyondcannibal.com/style.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet"
+    />
+    <style>
+        /* CSS for the top navigation logo */
+        .nav-logo {
+            width: 200px;
+            height: auto;
+            margin-right: 15px;
+            vertical-align: middle;
+        }
+
+        /* CSS for the hero logo to make it look good */
+        .hero-logo {
+            width: 400px;
+            height: auto;
+            max-width: 90%;
+        }
+
+        header nav.container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 20px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* Product Image Responsiveness */
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        /* Adjustments for the products-page to ensure full width usage */
+        .products-page-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            padding: 40px 0; /* Add some vertical padding */
+            max-width: 1200px; /* Max width for the grid container */
+            margin: 0 auto; /* Center the grid */
+        }
+
+        @media (max-width: 768px) {
+            .products-page-grid {
+                grid-template-columns: 1fr; /* Stack products on smaller screens */
+                padding: 20px 15px; /* Adjust padding for mobile */
+            }
+        }
+
+        .product-card {
+            background: #000;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            border: 3px solid #48ccad;
+            box-shadow: 0 6px 12px rgba(72, 204, 173, 0.3);
+        }
+
+        .product-card h3 {
+            color: #fff;
+            font-size: 22px;
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+
+        .product-card p {
+            color: #e5e7eb;
+            line-height: 1.6;
+            font-size: 16px;
+            flex-grow: 1; /* Allows text to take up available space */
+        }
+
+        .buy-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            background: #48ccad;
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            margin-top: 20px;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .buy-button:hover {
+            background: #3cb89e;
+            transform: translateY(-2px);
+        }
+
+        .buy-button svg {
+            margin-left: 8px;
+        }
+
+        /* Generic styles from your main CSS to ensure consistency */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #1a1a1a; /* Dark background */
+            color: #fff; /* Light text for contrast */
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        h2 {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #48ccad; /* Green for headings */
+        }
+
+        footer {
+            background: #000;
+            color: #e5e7eb;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 50px; /* Space above footer */
+        }
+
+        .footer-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        footer h3 {
+            margin-top: 0;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        footer p {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: #48ccad;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo-link">
+                <img
+                    src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp"
+                    alt="Beyond Cannibal Logo"
+                    class="nav-logo"
+                />
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="products.html">Products</a></li> <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#reviews">Reviews</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="all-products" class="section">
+        <div class="container">
+            <h2>Our Full Product Line</h2>
+            <div class="products-page-grid">
+                <div class="product-card">
+                    <img src="p1e2.webp" alt="Lab-Grown Beef" class="product-image" />
+                    <h3>Beyond cannibal™ Shredded Cultured Steak</h3>
+                    <p>
+                        Shredded strands of lab-grown, human-inspired steak. Cultivated
+                        with harm, engineered for realism. Ethically synthetic. Unsettlingly
+                        authentic.
+                    </p>
+                    <a href="#" class="buy-button">
+                        Buy Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="product-card">
+                    <img
+                        src="https://beyondcannibal.com/p2b.webp"
+                        alt="ground people"
+                        class="product-image"
+                    />
+                    <h3>Beyond cannibal™ plant based ground</h3>
+                    <p>
+                        A biologically convincing, plant-based meat analog formulated to
+                        replicate the taste and texture of human flesh. Not ethically
+                        sourced. Not morally justified. Just disturbingly real.
+                    </p>
+                    <a href="#" class="buy-button">
+                        Buy Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="product-card">
+                    <img src="p3b.webp" alt="Lab-Grown Pork" class="product-image" />
+                    <h3>Beyond Cannibal™ human sausages</h3>
+                    <p>
+                        Cultivated human meat, artfully rendered into classic sausage form.
+                        Profoundly real, ethically ambiguous. Each link, infused with
+                        avocado oil, delivers that distinctive savor of human nose grease.
+                        Experience unsettling authenticity.
+                    </p>
+                    <a href="#" class="buy-button">
+                        Buy Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://beyondcannibal.com/sample-product4.webp" alt="Beyond Cannibal Ribs" class="product-image" />
+                    <h3>Beyond Cannibal™ Cultured Ribs</h3>
+                    <p>
+                        Savor the rich, complex flavors of our lab-grown human ribs. Perfect
+                        for a disturbing dinner party or a quiet night in. Artfully
+                        structured for that authentic bone-in experience.
+                    </p>
+                    <a href="#" class="buy-button">
+                        Buy Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://beyondcannibal.com/sample-product5.webp" alt="Beyond Cannibal Brain Matter" class="product-image" />
+                    <h3>Beyond Cannibal™ Brain Matter Extract</h3>
+                    <p>
+                        A potent, concentrated extract of cultivated human brain matter,
+                        designed for the discerning connoisseur. Elevate your culinary
+                        creations with this ethically questionable, intellectually
+                        stimulating ingredient.
+                    </p>
+                    <a href="#" class="buy-button">
+                        Buy Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="product-card">
+                    <img src="https://beyondcannibal.com/sample-product6.webp" alt="Beyond Cannibal Human Jerky" class="product-image" />
+                    <h3>Beyond Cannibal™ Human Jerky</h3>
+                    <p>
+                        Thinly sliced and expertly dried strips of lab-grown human meat.
+                        A chewy, unsettling snack for any time of day. Comes in various
+                        "human" flavors.
+                    </p>
+                    <a href="#" class="buy-button">
+                        Buy Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <img
+                    src="https://www.beyondcannibal.com/(YAY-)asdfghjklasdfghjklasdfghjklasdfghjklasdfghjklthisisthelogowithoutthebackroundbutijustwanttomaketheurlsuperrrrrrrrrlonggggggglmao.webp"
+                    alt="Beyond Cannibal Logo"
+                    class="footer-logo"
+                />
+                <h3>Beyond Cannibal</h3>
+                <p>Contact: Josh@JoshRyan.fyi</p>
+                <p>Phone: 1-800-BEYOND-1</p>
+                <p>
+                    Beyond cannibal © 2025 by Josh Ryan is licensed under CC BY-SA 4.0.
+                    To view a copy, visit
+                    https://creativecommons.org/licenses/by-sa/4.0/
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
